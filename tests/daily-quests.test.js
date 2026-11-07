@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { createNewGameState } from '../src/systems/gameState.js';
 import { claimDaily, dailyStatus } from '../src/systems/dailySystem.js';
 import { ensureQuests, recordEvent, claimQuest, listQuests, claimableCount } from '../src/systems/questSystem.js';
@@ -51,6 +51,7 @@ describe('daily reward', () => {
 });
 
 describe('quests', () => {
+  afterEach(() => vi.useRealTimers());
   it('rotates a deterministic daily set of 3 and keeps it all day', () => {
     const a = createNewGameState();
     const b = createNewGameState();
@@ -72,6 +73,9 @@ describe('quests', () => {
     }
   });
   it('counts events, completes and pays once', () => {
+    // purchase() records its quest event with Date.now(), so pin the clock to the test day
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(day(6));
     const s = createNewGameState();
     ensureQuests(s, day(6));
     s.quests.daily.ids = ['d_jobs3', 'd_buy1', 'd_earn2k'];
