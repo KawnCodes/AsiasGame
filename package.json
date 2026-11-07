@@ -1,0 +1,26 @@
+{
+  "name": "glamour-city",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Glamour City — an HTML5 fashion, celebrity & lifestyle simulation game.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "smoke": "node scripts/smoke.mjs && node scripts/smoke-m2.mjs",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "^6.2.7",
+    "vite": "^5.4.21",
+    "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "@fontsource/parisienne": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
+    "@fontsource/quicksand": "^5.3.0"
+  }
+}

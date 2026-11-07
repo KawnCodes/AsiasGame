@@ -1,0 +1,6 @@
+.screen-wardrobe .detail-card h3 { font-size: 16px; }
+.fav-btn[aria-pressed='true'] { color: var(--pink-500); }
+.fav-btn .ico svg { width: 16px; height: 16px; }
+.side-panel .btn-small { min-height: 38px; font-size: 12.5px; }
+.side-panel .btn .ico svg { width: 16px; height: 16px; }
+.screen-wardrobe .side-panel .btn-row .btn { white-space: nowrap; font-size: 12px; padding: 0 6px; }

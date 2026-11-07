@@ -1,0 +1,24 @@
+.home-title { padding: 12px 14px 4px; font-family: var(--font-title); font-size: 22px; font-weight: 700; color: var(--plum); }
+.home-title .script { font-size: 32px; color: var(--pink-500); }
+.home-title small { display: block; font-family: var(--font-ui); font-size: 12px; color: var(--plum-soft); font-weight: 700; }
+.room { position: relative; margin: 6px 12px; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-lg), inset 0 0 0 4px #fff; }
+.room-bg, .room-bg svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.room-avatar { position: absolute; left: 36%; width: 28%; bottom: 2%; height: 74%; pointer-events: none; }
+.room-avatar svg { width: 100%; height: 100%; }
+.room::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 20%, rgba(40, 20, 80, 0), rgba(40, 20, 80, .65)); opacity: 0; transition: opacity .6s; pointer-events: none; }
+.room.night::after { opacity: 1; }
+.hotspots { position: absolute; inset: 0; }
+.hotspot { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.hs-dot { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: radial-gradient(circle at 35% 30%, #ffc0dc, #f0559b); box-shadow: 0 0 0 3px rgba(255, 255, 255, .85), 0 4px 10px rgba(200, 50, 120, .4); animation: pulseGlow 2.2s infinite; }
+.hs-dot .ico svg { width: 15px; height: 15px; display: block; }
+.hs-label { font-size: 11px; font-weight: 800; color: var(--plum); background: rgba(255, 255, 255, .92); padding: 1px 8px; border-radius: 10px; box-shadow: 0 2px 4px rgba(150, 50, 110, .2); }
+.hotspot:active .hs-dot { transform: scale(.9); }
+.home-panel { padding: 10px 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+.quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.quick { display: grid; grid-template-columns: 42px 1fr; grid-template-rows: auto auto; column-gap: 8px; align-items: center; text-align: left; padding: 10px; border-radius: 18px; background: #fff; box-shadow: var(--shadow), inset 0 0 0 2px #ffe0ee; }
+.quick-ico { grid-row: span 2; width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: linear-gradient(180deg, #ffa2cc, #f0559b); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .4); }
+.quick-ico .ico svg { width: 24px; height: 24px; display: block; }
+.quick b { font-size: 14px; }
+.quick small { font-size: 11px; color: var(--plum-soft); }
+.quick:active { transform: scale(.97); }
+.tip p { margin: 0; font-size: 13px; }
