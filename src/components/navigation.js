@@ -30,7 +30,7 @@ export function createRouter({ root, nav, hud, app, screens, ctx }) {
     app.dataset.chrome = chrome;
     hud.hidden = chrome === 'none';
     nav.hidden = chrome !== 'full';
-    const tabFor = { shop: 'mall', creator: 'home', career: 'work', profile: 'home' }[id] || id;
+    const tabFor = { shop: 'mall', creator: 'home', career: 'work', profile: 'home', pavilion: 'city', contest: 'city' }[id] || id;
     tabButtons.forEach((b) => b.classList.toggle('active', b.dataset.tab === tabFor));
   }
 

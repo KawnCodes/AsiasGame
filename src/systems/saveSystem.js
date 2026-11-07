@@ -36,6 +36,11 @@ export const MIGRATIONS = {
     s.version = 2;
     return s;
   },
+  // v2 → v3 (Milestone 3): fashion contests & trophies — created by fillDefaults().
+  2: (s) => {
+    s.version = 3;
+    return s;
+  },
 };
 
 /** Fill in any missing fields from a fresh state so older saves never crash new code. */
@@ -61,6 +66,10 @@ function fillDefaults(s) {
     weekly: { ...fresh.quests.weekly, ...s.quests?.weekly },
     story: { ...fresh.quests.story, ...s.quests?.story },
   };
+  out.contests = { ...fresh.contests, ...s.contests, judge: { ...fresh.contests.judge, ...s.contests?.judge } };
+  out.contests.board = Array.isArray(s.contests?.board) ? s.contests.board : [];
+  out.contests.history = Array.isArray(s.contests?.history) ? s.contests.history : [];
+  out.trophies = Array.isArray(s.trophies) ? s.trophies : [];
   out.settings = { ...fresh.settings, ...s.settings };
   out.outfits = Array.isArray(s.outfits) ? s.outfits : [];
   // drop equipped references to items that no longer exist in the catalogue

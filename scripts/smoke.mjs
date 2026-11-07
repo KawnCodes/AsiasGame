@@ -134,7 +134,7 @@ try {
   await page.waitForSelector('.city-svg');
   await sleep(800);
   await shot('11-city');
-  await page.locator('.loc[data-id="pageant"]').click({ force: true });
+  await page.locator('.loc[data-id="cafe"]').click({ force: true });
   await sleep(300);
   check('coming-soon building explains itself', (await page.locator('.toast').last().textContent()).includes('opens in'));
   await page.locator('.district-jump .chip', { hasText: 'Star Boulevard' }).click();

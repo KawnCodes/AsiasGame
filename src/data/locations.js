@@ -32,7 +32,7 @@ export const LOCATIONS = [
   { id: 'agency', name: 'Belle Model Agency', district: 'star_boulevard', status: 'open', action: { type: 'career', career: 'modelling' }, x: 140, y: 850, art: { kind: 'tower', w: 112, h: 170, wall: '#f4f0ff', trim: '#b48cff', roof: '#8c6be0' } },
   { id: 'studio_music', name: 'Starlight Records', district: 'star_boulevard', status: 'open', requires: { level: 2 }, action: { type: 'career', career: 'singing' }, x: 264, y: 872, art: { kind: 'studio', w: 108, h: 148, wall: '#2f2a44', trim: '#ff7eb6', roof: '#ff7eb6' } },
   { id: 'studio_film', name: 'Silver Screen Studios', district: 'star_boulevard', status: 'open', requires: { level: 3 }, action: { type: 'career', career: 'acting' }, x: 16, y: 1046, art: { kind: 'studio', w: 168, h: 76, wall: '#fff4d6', trim: '#e8c26e', roof: '#d9a640' } },
-  { id: 'pageant', name: 'Grand Pavilion', district: 'star_boulevard', status: 'soon', soon: 'Fashion contests update (Milestone 3)', x: 200, y: 1030, art: { kind: 'pavilion', w: 172, h: 92, wall: '#fff', trim: '#e8c26e', roof: '#ffb3cf' } },
+  { id: 'pageant', name: 'Grand Pavilion', district: 'star_boulevard', status: 'open', action: { type: 'screen', screen: 'pavilion' }, x: 200, y: 1030, art: { kind: 'pavilion', w: 172, h: 92, wall: '#fff', trim: '#e8c26e', roof: '#ffb3cf' } },
 
   // Romance Riverside
   { id: 'restaurant', name: 'La Rosette', district: 'riverside', status: 'soon', soon: 'Dating update (Milestone 5)', x: 16, y: 1220, art: { kind: 'cafe', w: 150, h: 130, wall: '#fff6ee', awning: '#c2193a', trim: '#fff' } },

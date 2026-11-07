@@ -3,9 +3,9 @@
 | # | Milestone | Status |
 |---|---|---|
 | 1 | Playable foundation | Done |
-| 2 | Fast careers & progression (jobs, timers, XP/levels, fame, daily rewards, promotions, quests) | **Done (this build)** |
-| 3 | Fashion competitions (themes, AI contestants, judging, rankings, rewards) | Next |
-| 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | Planned |
+| 2 | Fast careers & progression (jobs, timers, XP/levels, fame, daily rewards, promotions, quests) | Done |
+| 3 | Fashion competitions (themes, AI contestants, judging, rankings, rewards) | **Done (this build)** |
+| 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | Next |
 | 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | Planned |
 | 6 | Minigames & extras (memory, match-3, styling challenge, photoshoots, covers, resale) | Planned |
 | 7 | Polish & release (content expansion, audio, tutorial, accessibility, perf, regression tests) | Planned |
@@ -56,10 +56,37 @@
 Measured pacing (optimal play, all careers in parallel): level 2 ≈ 3 min, level 5 ≈ 6 min,
 level 10 ≈ 13 min.
 
-## Milestone 3 — plan
-`data/competitions.js` (10 themes with target tags, colour palettes, required slots),
-`systems/competitionSystem.js` scoring theme match, colour harmony, coordination, hair,
-makeup, accessories, rarity and creativity; seeded AI contestants generated from the
-catalogue; contest flow screen (entry → dress up → runway presentation → judges → ranking
-→ rewards: 200 coins for finishing, 1,500 coins + 20 gems for winning); trophies shown on
-the apartment shelf; contest quests; open the Grand Pavilion.
+## Milestone 3 — delivered
+* **Grand Pavilion** opens on Star Boulevard (also reachable from Home → Fashion contests).
+* **10 themes**: Red Carpet Glamour, Summer Chic, Royal Princess, Romantic Date, Vintage
+  Hollywood, Elegant Evening, Winter Wonderland, Street Style, Pastel Princess, Luxury
+  Fashion — each with weighted style tags, a colour palette and signature makeup.
+* **Contest board**: 4 open contests that refill instantly after you enter (no waiting),
+  one of them the seeded *theme of the day* (+50 % coins).
+* **Three tiers**: Rising Star (level 1), City Showcase (level 4, ×1.6 prizes), Grand Gala
+  (level 8, ×2.5 prizes, toughest rivals).
+* **Dressing room**: theme brief, palette, judges' checklist, ♥ theme-match markers on
+  your clothes, quick hair / hair-colour / makeup changes.
+* **Real scoring** (`systems/competitionSystem.js`), eight 0–10 categories: theme,
+  coordination, colour harmony (palette distance + hue count), hairstyle, makeup,
+  accessories, rarity, creativity (style breadth, patterns/finishes; repeating your last
+  entry costs points).
+* **Three NPC judges** (Madame Céleste, Rio Vega, Lady Primrose Ashby) weight categories
+  differently, score 1–10 and each comments on a different aspect of your look.
+* **AI rivals** built from the full catalogue with tier-based skill, scored by the same code.
+* **Presentation**: runway walk (skippable), judges' scorecards + breakdown, podium,
+  full ranking, rewards: win 1,500 coins + 20 gems; 2nd 800 + 5; 3rd 500; everyone ≥ 200.
+* **Trophies** for top-3 finishes appear on the apartment shelf (tap for the list).
+* **Guest judge**: pick the stronger of two looks; 75 coins per correct call, 10 a day.
+* Contest quests (daily, weekly, 5 milestones) and profile stats; save schema v3.
+* Tests: 86 unit tests; browser playthroughs M1 (16), M2 (20), M3 (17 checks).
+
+Calibration (simulated, 200 contests per tier): a well-styled *starter* wardrobe wins
+~28 % of Rising Star contests; a styled budget wardrobe ~90 % Rising / ~68 % City /
+~52 % Gala; best-in-catalogue looks ~65 % of Gala contests.
+
+## Milestone 4 — plan
+Property agency (8 homes, 5,000 → 300,000 coins), multiple owned homes and "move in",
+room scenes per property, furniture catalogue + 4 furniture shops, furniture inventory,
+touch drag-and-drop decorating with bounds/anchors/layering, rotate/store/remove,
+wallpaper/wall colour/flooring, instant home upgrades, persistent layouts (save v4).

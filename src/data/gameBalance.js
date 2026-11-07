@@ -67,6 +67,25 @@ export const BALANCE = {
     questRange: [300, 1000],
   },
 
+  // ---- fashion contests (Milestone 3) ----
+  contests: {
+    boardSize: 4, // open contests on the Grand Pavilion board (refills instantly after entering)
+    // skill: AI rivals pick on-theme pieces this often (0..1). mult scales every prize.
+    tiers: {
+      rising: { name: 'Rising Star', minLevel: 1, skill: [0.1, 0.35], mult: 1, rivals: 4 },
+      city: { name: 'City Showcase', minLevel: 4, skill: [0.45, 0.7], mult: 1.6, rivals: 5 },
+      gala: { name: 'Grand Gala', minLevel: 8, skill: [0.65, 0.9], mult: 2.5, rivals: 5 },
+    },
+    prizes: {
+      1: { coins: 1500, gems: 20, xp: 200, fame: 60 },
+      2: { coins: 800, gems: 5, xp: 120, fame: 35 },
+      3: { coins: 500, gems: 0, xp: 90, fame: 25 },
+      entry: { coins: 200, gems: 0, xp: 60, fame: 10 }, // everyone who finishes gets at least this
+    },
+    spotlightBonus: 0.5, // theme of the day pays +50% coins
+    guestJudge: { coins: 75, xp: 15, paidRoundsPerDay: 10 },
+  },
+
   // Reference price bands (coins) — the catalogue tests assert items stay inside them.
   priceBands: {
     top: [100, 300],

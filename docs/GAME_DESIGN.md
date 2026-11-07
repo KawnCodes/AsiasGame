@@ -31,7 +31,7 @@ Several activities are always available so the player is never forced down one p
 | Level-up | 500 coins + 5 gems (granted once per level, ledger-guarded) |
 | Daily gift | 1,000 coins + 10 gems (day 1) rising to 3,000 + 30 on day 7; local calendar day reset |
 | Minigame (M6) | 250 coins + 50 XP |
-| Contest entry / win (M3) | 200 coins / 1,500 coins + 20 gems |
+| Contests | finish ≥ 200 coins · 3rd 500 · 2nd 800 + 5 gems · win 1,500 + 20 gems; City ×1.6, Gala ×2.5; theme of the day +50 % coins |
 | Career promotion | 2,000 coins + 15 gems per career level |
 | Quests | daily 300–800 coins, weekly 1,000–2,500 + gems, milestones up to 5,000 + 40 gems |
 | Resale (M6) | 50 % of price |
@@ -47,13 +47,20 @@ pastel, boho, formal) and a **rarity** (common → legendary). Milestone 3's pag
 scores theme match from tags, colour harmony from item colours, rarity, completeness
 (hair/makeup/accessories) and creativity (tag variety).
 
+## Fashion contests
+Ten themes, three tiers, three judges. Each look is scored 0–10 in eight categories
+(theme, coordination, colour harmony, hairstyle, makeup, accessories, rarity, creativity);
+each judge weights them differently and gives 1–10, for a total out of 30. Rivals are
+generated from the same catalogue with tier-based skill and scored by the same code, so
+better shopping and styling genuinely win more often.
+
 ## City districts
 Rosewood Street (home, café) · Boutique Avenue (5 fashion shops + salon) · Star Boulevard
 (makeup studio, agency, music & film studios, Grand Pavilion) · Romance Riverside
 (restaurant, park, arcade, social club) · Luxury Hills (realty, furniture).
 
 ## Original cast (so far)
-Career mentors: **Vivienne Belle** (modelling), **DJ Marlowe** (singing), **Director
+Contest judges: **Madame Céleste**, **Rio Vega**, **Lady Primrose Ashby**. Career mentors: **Vivienne Belle** (modelling), **DJ Marlowe** (singing), **Director
 Okafor** (acting). Shopkeepers: **Poppy** (Petal & Thread), **Madame Céleste** (Maison Étoile), **Jade**
 (Stiletto Lane), **Opal** (Glimmer Jewellers), **Marigold** (The Ribbon Box), **Coco**
 (Silk & Curl Salon), **Bijou** (Blush Studio). Romanceable NPCs and friends arrive in M5.

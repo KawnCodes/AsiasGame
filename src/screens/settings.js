@@ -59,7 +59,7 @@ export function openSettings(ctx) {
     toggle('Reduce motion', 'reducedMotion', 'Calmer screen transitions & sparkles'),
     h('div', { class: 'settings-block' }, h('b', {}, 'Save data'), h('p', { class: 'muted tiny' }, 'Your game saves automatically on this device. Export a backup file to keep it safe or move it to another device.'), h('div', { class: 'btn-row wrap' }, exportBtn, importBtn), fileInput),
     h('div', { class: 'settings-block' }, resetBtn),
-    h('p', { class: 'muted tiny' }, 'Glamour City v0.2 · Milestone 2 · works offline once installed'),
+    h('p', { class: 'muted tiny' }, 'Glamour City v0.3 · Milestone 3 · works offline once installed'),
   );
   ctx.modal.open({ title: 'Settings', body, buttons: [{ label: 'Done', value: true, cls: 'btn-primary' }] });
 }

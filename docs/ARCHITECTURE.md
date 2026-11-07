@@ -53,6 +53,14 @@ the same SVG.
 * Systems emit quest events (`job`, `jobCoins`, `buy`, `outfit`, `daily`, `promotion`,
   `restyle`) via `questSystem.recordEvent`; milestone quests read live state instead.
 
+## Contests
+`systems/competitionSystem.js` holds the scoring function, judge model, rival generator,
+contest board and entry submission. All randomness is seeded from the contest uid
+(`seededRandom`), so the same contest always produces the same rivals and judge scores —
+useful for tests and for verifying results if contests ever move online. Entering is one
+atomic transaction: rivals generated, everyone judged, prize granted under
+`contest:<uid>`, history/trophies updated and the board slot replaced.
+
 ## Navigation
 `components/navigation.js` routes between screen modules with slide/fade transitions and
 a history stack. Each screen declares its chrome (HUD + tab bar, HUD only, or none).

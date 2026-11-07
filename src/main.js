@@ -17,6 +17,7 @@ import './styles/shopping.css';
 import './styles/houses.css';
 import './styles/creator.css';
 import './styles/careers.css';
+import './styles/pavilion.css';
 
 import { store } from './systems/gameState.js';
 import { loadGame, saveGame } from './systems/saveSystem.js';
@@ -36,6 +37,7 @@ import { mall, shop } from './screens/shops.js';
 import profile from './screens/profile.js';
 import { work, career } from './screens/careers.js';
 import quests from './screens/quests.js';
+import { pavilion, contest } from './screens/pavilion.js';
 import { ticker } from './components/ticker.js';
 import { readyJobs } from './systems/careerSystem.js';
 import { claimableCount, questsStale, ensureQuests } from './systems/questSystem.js';
@@ -64,7 +66,7 @@ async function boot() {
     nav: $('#nav'),
     hud: $('#hud'),
     app: $('#app'),
-    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests },
+    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest },
     ctx,
   });
   ctx.go = router.go;

@@ -14,6 +14,7 @@ export const HOTSPOTS = [
   { id: 'vanity', label: 'Vanity', x: 268, y: 196 },
   { id: 'mirror', label: 'Mirror', x: 162, y: 270 },
   { id: 'bed', label: 'Bed', x: 72, y: 262 },
+  { id: 'trophies', label: 'Trophies', x: 70, y: 104 },
   { id: 'gift', label: 'Daily gift', x: 104, y: 352 },
 ];
 
@@ -61,11 +62,10 @@ export function roomSVG(state) {
     <rect x="76" y="54" width="40" height="34" rx="4" fill="#fff" stroke="#f2c86a" stroke-width="3"/>
     <path d="M 82 82 L 92 68 L 99 76 L 104 70 L 112 82 Z" fill="#9fdcae"/><circle cx="104" cy="62" r="4" fill="#ffd36e"/>
   </g>
-  <!-- trophy shelf -->
+  <!-- trophy shelf: shows the player's latest podium trophies -->
   <g>
     <rect x="18" y="128" width="104" height="7" rx="2" fill="#fff" stroke="#e8c26e"/>
-    <path d="M 40 128 L 44 116 L 52 116 L 56 128 Z M 80 128 L 84 116 L 92 116 L 96 128 Z" fill="#fbe9f2" stroke="#e9c" stroke-dasharray="2 2"/>
-    <text x="70" y="148" text-anchor="middle" font-size="8" fill="#b07aa6" font-family="Quicksand, sans-serif" font-weight="700">trophies go here!</text>
+    ${trophiesSVG(state.trophies || [])}
   </g>
 
   <!-- bed -->
@@ -124,4 +124,25 @@ export function roomSVG(state) {
   <g><rect x="12" y="330" width="22" height="22" rx="4" fill="#fff" stroke="#f0c6da"/>
     <path d="M 23 330 C 10 312 6 300 14 298 C 18 308 22 316 23 330 C 24 314 26 298 34 296 C 40 304 32 318 23 330 Z" fill="#7fcf98"/></g>
 </svg>`;
+}
+
+const CUP = { 1: ['#ffd36e', '#c9932e'], 2: ['#e4e7ef', '#9aa1b3'], 3: ['#e7a978', '#a8673f'] };
+
+/** Up to 5 most recent trophies, best first; an empty shelf shows a hint. */
+function trophiesSVG(trophies) {
+  if (!trophies.length) {
+    return `<path d="M 40 128 L 44 116 L 52 116 L 56 128 Z M 80 128 L 84 116 L 92 116 L 96 128 Z" fill="#fbe9f2" stroke="#e9c" stroke-dasharray="2 2"/>
+    <text x="70" y="148" text-anchor="middle" font-size="8" fill="#b07aa6" font-family="Quicksand, sans-serif" font-weight="700">win contests to fill me!</text>`;
+  }
+  const show = [...trophies].sort((a, b) => (a.place - b.place) || (b.at - a.at)).slice(0, 5);
+  return show.map((t, i) => {
+    const [c, d] = CUP[t.place] || CUP[3];
+    const x = 30 + i * 20;
+    const big = t.tier === 'gala' ? 1.25 : t.tier === 'city' ? 1.1 : 1;
+    return `<g transform="translate(${x} 128) scale(${big})">
+      <rect x="-5" y="-4" width="10" height="4" fill="${d}"/><rect x="-1.5" y="-9" width="3" height="5" fill="${d}"/>
+      <path d="M -7 -20 L 7 -20 L 5 -12 Q 0 -8 -5 -12 Z" fill="${c}" stroke="${d}" stroke-width=".8"/>
+      <path d="M -7 -18 Q -11 -17 -7 -13 M 7 -18 Q 11 -17 7 -13" fill="none" stroke="${d}" stroke-width="1.2"/>
+      <circle cx="-2" cy="-17" r="1.2" fill="#fff" opacity=".8"/></g>`;
+  }).join('') + `<text x="70" y="148" text-anchor="middle" font-size="8" fill="#b07aa6" font-family="Quicksand, sans-serif" font-weight="700">${trophies.length} trophies</text>`;
 }
