@@ -31,9 +31,15 @@ npm run build && npm run smoke   # three browser playthroughs at iPhone size, wr
 `npm run smoke` and `npm run icons` use Playwright (installed globally in this
 environment; otherwise `npm i -D playwright && npx playwright install chromium`).
 
+## Play online (GitHub Pages)
+
+Every push to `main` runs the tests, builds the game and publishes it to
+**https://kawncodes.github.io/AsiasGame/** via `.github/workflows/deploy-pages.yml`.
+One-time setup: repository **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
 ## Install on iPhone
 
-Open the production URL in Safari → Share → **Add to Home Screen**. After the first
+Open https://kawncodes.github.io/AsiasGame/ (or your own production URL) in Safari → Share → **Add to Home Screen**. After the first
 launch the game works offline.
 
 ## Where things live
