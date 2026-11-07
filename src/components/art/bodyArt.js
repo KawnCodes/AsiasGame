@@ -10,6 +10,7 @@
  */
 import { symClosed, mirrorPath } from '../../utils/svgPath.js';
 import { mix, darken, lighten } from '../../utils/color.js';
+import { mascBody, M_FACE, M_BROW, M_LIPS } from './mascArt.js';
 
 export const TORSO = symClosed(
   'M 100 122 C 95 122 92 123 90 125 C 80 127 72 129 69 136 C 67 146 70 158 74 166 C 77 176 84 186 85 194 C 84 204 79 216 78 230 C 79 240 88 250 100 253'
@@ -90,36 +91,43 @@ export function bodyDefs(id, skin) {
 }
 
 /** Skin layers behind the clothes: legs, feet, torso, neck. */
-export function bodyBack(id, skin) {
+export function bodyBack(id, skin, masc = false) {
   const line = darken(skin.shade, 0.25);
-  const legs = `${LEG_L} ${mirrorPath(LEG_L)}`;
-  const feet = `${FOOT_L} ${mirrorPath(FOOT_L)}`;
+  const LEG = masc ? mascBody.leg : LEG_L;
+  const FOOT = masc ? mascBody.foot : FOOT_L;
+  const T = masc ? mascBody.torso : TORSO;
+  const N = masc ? mascBody.neck : NECK;
+  const legs = `${LEG} ${mirrorPath(LEG)}`;
+  const feet = `${FOOT} ${mirrorPath(FOOT)}`;
   return `<g class="body" stroke="${line}" stroke-width=".7" stroke-linejoin="round">
     <path d="${legs}" fill="${skin.base}"/>
     <path d="${legs}" fill="url(#${id}-skinShade)" stroke="none"/>
     <path d="${feet}" fill="${skin.base}"/>
-    <path d="${TORSO}" fill="${skin.base}"/>
-    <path d="${TORSO}" fill="url(#${id}-skinShade)" stroke="none"/>
-    <path d="M 84 150 C 90 158 96 158 99 152 M 116 150 C 110 158 104 158 101 152" fill="none" stroke="${skin.shade}" stroke-width=".9" opacity=".6"/>
-    <path d="${NECK}" fill="${skin.base}"/>
+    <path d="${T}" fill="${skin.base}"/>
+    <path d="${T}" fill="url(#${id}-skinShade)" stroke="none"/>
+    ${masc ? '' : `<path d="M 84 150 C 90 158 96 158 99 152 M 116 150 C 110 158 104 158 101 152" fill="none" stroke="${skin.shade}" stroke-width=".9" opacity=".6"/>`}
+    <path d="${N}" fill="${skin.base}"/>
     <path d="M 92 104 C 96 112 104 112 108 104 L 108 112 C 103 116 97 116 92 112 Z" fill="${skin.shade}" stroke="none" opacity=".55"/>
   </g>`;
 }
 
 /** Simple modest base layer (always worn under clothing). */
-export function baseLayer() {
+export function baseLayer(masc = false) {
   const c = '#f3e6f7';
   const d = '#d9c3e3';
+  if (masc) return `<path d="${symClosed('M 100 206 C 92 206 86 206 81.5 207 C 80 220 79.5 236 80 250 C 86 252 93 254 100 255')}" fill="#cfd8ea" stroke="#aab6cc" stroke-width=".7"/>`;
   return `<g class="base-layer" stroke="${d}" stroke-width=".7">
     <path d="${symClosed('M 100 150 C 92 148 86 146 80 147 C 76 156 79 168 84 186 C 85 192 86 196 86 199 C 92 200 96 200 100 200')}" fill="${c}"/>
     <path d="${symClosed('M 100 214 C 92 214 86 214 81 215 C 79 222 78 228 78.5 236 C 84 240 92 244 100 253')}" fill="${c}"/>
   </g>`;
 }
 
-export function arms(id, skin) {
+export function arms(id, skin, masc = false) {
   const line = darken(skin.shade, 0.25);
-  const a = `${ARM_L} ${mirrorPath(ARM_L)}`;
-  const hnd = `${HAND_L} ${mirrorPath(HAND_L)}`;
+  const A = masc ? mascBody.arm : ARM_L;
+  const H = masc ? mascBody.hand : HAND_L;
+  const a = `${A} ${mirrorPath(A)}`;
+  const hnd = `${H} ${mirrorPath(H)}`;
   return `<g class="arms" stroke="${line}" stroke-width=".7" stroke-linejoin="round">
     <path d="${a}" fill="${skin.base}"/>
     <path d="${a}" fill="url(#${id}-skinShade)" stroke="none" opacity=".7"/>
@@ -129,7 +137,7 @@ export function arms(id, skin) {
 
 export function head(id, skin, ap, mk) {
   const line = darken(skin.shade, 0.3);
-  const faceD = FACE[ap.face] || FACE.oval;
+  const faceD = mk.masc ? M_FACE : FACE[ap.face] || FACE.oval;
   const ears = `${EAR_L} ${mirrorPath(EAR_L)}`;
   return `<g class="head">
     <path d="${ears}" fill="${skin.base}" stroke="${line}" stroke-width=".7"/>
@@ -156,15 +164,15 @@ function eyePair(id, ap, mk, eyeColor, browColor) {
 
   // eyeshadow between lid and brow
   let shadow = '';
-  if (mk.eyeshadow?.color) {
+  if (mk.eyeshadow?.color && !mk.masc) {
     const s = `M ${ox - 1.5} ${oy} C 78.5 51.5 94.5 50.5 97.8 64 C 93 57.5 82 57.5 ${ox - 1.5} ${oy} Z`;
     shadow = `<path d="${s} ${mirrorPath(s)}" fill="${mk.eyeshadow.color}" opacity=".62" filter="url(#${id}-soft)"/>`;
   }
   // liner styles
   const style = mk.eyeliner?.style || 'none';
-  const lineW = style === 'none' ? 1.7 : style === 'thin' ? 2.3 : 2.8;
+  const lineW = mk.masc ? 1.6 : style === 'none' ? 1.7 : style === 'thin' ? 2.3 : 2.8;
   let wing = '';
-  if (style === 'wing' || style === 'dramatic') {
+  if (!mk.masc && (style === 'wing' || style === 'dramatic')) {
     const far = style === 'dramatic' ? [70.5, 57.5] : [73, 60.5];
     const w = `M ${ox + 2.5} ${oy - 1.4} L ${far[0]} ${far[1]} L ${ox + 1} ${oy + 0.8} Z`;
     wing = `<path d="${w} ${mirrorPath(w)}" fill="${lash}"/>`;
@@ -172,7 +180,7 @@ function eyePair(id, ap, mk, eyeColor, browColor) {
   // lashes (outer flicks)
   const l = `M ${ox + 1} ${oy - 1} L ${ox - 3} ${oy - 4} M ${ox + 3} ${oy - 4.5} L ${ox} ${oy - 8} M ${ox + 6.5} ${oy - 7} L ${ox + 5} ${oy - 10.5}`;
   const crease = `M ${ox + 1} ${oy - 4} C 82 55 92 54.5 96 60.5`;
-  const brow = BROWS[ap.brows] || BROWS.soft_arch;
+  const brow = mk.masc ? M_BROW : BROWS[ap.brows] || BROWS.soft_arch;
   return `
     ${shadow}
     <clipPath id="${id}-eyeL"><path d="${shapeL}"/></clipPath>
@@ -183,7 +191,7 @@ function eyePair(id, ap, mk, eyeColor, browColor) {
     <path d="${crease} ${mirrorPath(crease)}" fill="none" stroke="#7a4a4a" stroke-width=".7" opacity=".35"/>
     <path d="${upL} ${upR}" fill="none" stroke="${lash}" stroke-width="${lineW}" stroke-linecap="round"/>
     <path d="M ${ox} ${oy} ${E.low} ${mirrorPath(`M ${ox} ${oy} ${E.low}`)}" fill="none" stroke="${lash}" stroke-width=".7" opacity=".45"/>
-    <path d="${l} ${mirrorPath(l)}" stroke="${lash}" stroke-width="1.3" stroke-linecap="round"/>
+    ${mk.masc ? '' : `<path d="${l} ${mirrorPath(l)}" stroke="${lash}" stroke-width="1.3" stroke-linecap="round"/>`}
     ${wing}
     <path d="${brow} ${mirrorPath(brow)}" fill="${browColor}"/>`;
 }
@@ -191,11 +199,11 @@ function eyePair(id, ap, mk, eyeColor, browColor) {
 function face(id, skin, ap, mk) {
   const eyeColor = mk.eyeColorHex;
   const browColor = darken(mk.hairHex, 0.25);
-  const L = LIPS[ap.lips] || LIPS.full;
-  const natural = mix(skin.base, '#d65a78', 0.42);
-  const lipColor = mk.lipstick?.color || natural;
+  const L = mk.masc ? M_LIPS : LIPS[ap.lips] || LIPS.full;
+  const natural = mk.masc ? mix(skin.base, '#a85a62', 0.32) : mix(skin.base, '#d65a78', 0.42);
+  const lipColor = (!mk.masc && mk.lipstick?.color) || natural;
   let blush = '';
-  if (mk.blush?.color) {
+  if (mk.blush?.color && !mk.masc) {
     blush = `<ellipse cx="80.5" cy="82" rx="8" ry="4.6" fill="url(#${id}-blush)"/><ellipse cx="119.5" cy="82" rx="8" ry="4.6" fill="url(#${id}-blush)"/>`;
   }
   const gloss = mk.lipstick?.gloss ? 0.75 : 0.4;

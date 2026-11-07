@@ -5,9 +5,9 @@
 | 1 | Playable foundation | Done |
 | 2 | Fast careers & progression (jobs, timers, XP/levels, fame, daily rewards, promotions, quests) | Done |
 | 3 | Fashion competitions (themes, AI contestants, judging, rankings, rewards) | Done |
-| 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | **Done (this build)** |
-| 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | Next |
-| 6 | Minigames & extras (memory, match-3, styling challenge, photoshoots, covers, resale) | Planned |
+| 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | Done |
+| 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | **Done (this build)** |
+| 6 | Minigames & extras (memory, match-3, styling challenge, photoshoots, covers, resale) | Next |
 | 7 | Polish & release (content expansion, audio, tutorial, accessibility, perf, regression tests) | Planned |
 
 ## Milestone 1 — delivered
@@ -112,8 +112,34 @@ Calibration (simulated, 200 contests per tier): a well-styled *starter* wardrobe
   inconsistent). Tests: 108 unit tests; browser playthroughs M1–M4 (16 + 20 + 17 + 26
   checks), M4 drags with real touch events.
 
-## Milestone 5 — plan
-Romanceable NPCs (4+) with portraits, backstories, favourite gifts and branching dialogue;
-relationship levels, dates at the café/restaurant/park, phone messages and contacts,
-simulated friends with profiles and homes to visit, inviting partners/friends home
-(visitors appear in your rooms), parties that grant fame and relationship points.
+## Milestone 5 — delivered
+* **Original cast** (all adults): five romanceable characters — Leo (singer-songwriter),
+  Theo (pastry chef), Kai (surf photographer), Julian (actor), Élodie (fashion designer) —
+  and four friends — Mimi (beauty vlogger), Zara (model), Priya (film-maker), Lottie
+  (florist). Each has a portrait/full-body look, backstory, job, favourite gifts, the
+  conversation "vibes" they enjoy, personal topics, flirts, story scenes and texts.
+* **Masculine character template** added to the layered renderer (body, face, six short
+  hairstyles, menswear) so male characters render in the same style.
+* **Four venues** open on the map — Sugarplum Café, La Rosette, Heart Lake Park, The Social
+  Club — with illustrated scenes showing who's there today; tap to meet people.
+* **Relationship actions**: chat (branching choices scored by each character's taste),
+  gifts (14; love/like/dislike), flirting, dates (3 choice beats at one of 4 venues, outfit
+  bonus for dressing to the venue, hearts rating, XP + fame), asking someone to be your
+  partner (one at a time; "just friends" option), story scenes at relationship milestones.
+* **Levels**: romance Stranger → Acquaintance → Friend → Crush → Close → Sweetheart → Soulmate
+  (past Close only as partners); friends up to Best Friend. Daily caps (3 chats, 2 gifts,
+  2 flirts earn points) keep progress fair with no waiting timers.
+* **Phone** (top bar, unread badge): message threads with reply choices, contacts, daily
+  good-morning texts from your partner, friends' invites, congratulations when you win a
+  contest or buy a home.
+* **Visitors & parties**: invite partners/friends home — they appear standing in your room
+  for the day; host parties (up to 4 guests, catering 500 coins; first party a day pays
+  fame + XP and boosts every guest); visit friends' own decorated homes; compare stats.
+* Social quests (daily, weekly, 6 milestones), relationship status on the profile,
+  save schema v5. Tests: 130 unit tests; browser playthroughs M1–M5 (16+20+17+26+18).
+
+## Milestone 6 — plan
+Fashion Memory, Jewellery Match-3 and Timed Styling Challenge minigames at the Glitter
+Arcade (250 coins + 50 XP each); photoshoots (outfit, pose, background — including your
+homes) with frames, fictional magazine covers, an album and PNG export; home design
+contests; clothing & furniture resale at 50 %.

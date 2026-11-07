@@ -6,6 +6,7 @@
 import { h, appendTo, fmt } from '../utils/dom.js';
 import { icon } from '../components/icons.js';
 import { renderRoom } from '../components/roomRenderer.js';
+import { renderAvatar as renderAvatarFn } from '../components/avatarRenderer.js';
 import { addTwinkles } from '../components/sparkles.js';
 import { wardrobeSize } from '../systems/inventory.js';
 import { maybeShowDaily, openDaily } from '../components/dailyReward.js';
@@ -17,6 +18,10 @@ import { BALANCE } from '../data/gameBalance.js';
 import { PROPERTY_BY_ID } from '../data/properties.js';
 import { ROOM, roomsOf, layoutOf, drawOrder, itemScale } from '../systems/decoratingSystem.js';
 import { moveIn } from '../systems/propertySystem.js';
+import { dateKey } from '../utils/time.js';
+import { metIds, canInvite, relationshipStatus, unreadCount } from '../systems/relationshipSystem.js';
+import { CHARACTER_BY_ID } from '../data/characters.js';
+import { openParty, doInvite } from './social.js';
 
 const FUNC_LABEL = { wardrobe: 'Wardrobe', vanity: 'Vanity', mirror: 'Mirror', bed: 'Bed', trophies: 'Trophies' };
 const lastRoom = {};
@@ -61,8 +66,12 @@ export default {
       roomTabs.hidden = rooms.length < 2;
       for (const r of rooms) roomTabs.append(h('button', { class: `chip ${r.id === roomId ? 'active' : ''}`, onClick: () => { roomId = r.id; ctx.sfx.play('tap'); render(ctx.store.get()); } }, r.name));
 
-      room.querySelector('.room-bg').innerHTML = renderRoom(s, propertyId, roomId, { avatar: true });
+      // today's visitors stand in your current home's first room
+      const guests = isCurrent && roomId === rooms[0].id ? (s.social?.hosting?.day === hostDay() ? s.social.hosting.guests : []) : [];
+      const gx = [310, 70, 250, 130];
       hotspots.innerHTML = '';
+      room.querySelector('.room-bg').innerHTML = renderRoom(s, propertyId, roomId, { avatar: true, people: guests.map((id, i) => ({ look: CHARACTER_BY_ID[id].look, x: gx[i], name: CHARACTER_BY_ID[id].name })) });
+      if (guests.length) hotspots.append(h('div', { class: 'guest-note' }, `${guests.map((id) => CHARACTER_BY_ID[id].name.split(' ')[0]).join(' & ')} ${guests.length > 1 ? 'are' : 'is'} visiting 💕`));
       const seen = new Set();
       for (const e of drawOrder(s, layoutOf(s, propertyId, roomId))) {
         const f = e.item.func;
@@ -82,6 +91,8 @@ export default {
       appendTo(toolbar, 
         h('button', { class: 'btn btn-primary btn-small', onClick: () => ctx.go('decorate', { propertyId, roomId }), html: `${icon('sparkle')}Decorate` }),
         h('button', { class: 'btn btn-soft btn-small', onClick: () => ctx.go('homes'), html: `${icon('home')}My homes (${s.properties.owned.length})` }),
+        isCurrent ? h('button', { class: 'btn btn-lilac btn-small', onClick: () => inviteSomeone() }, '💌 Invite') : null,
+        isCurrent ? h('button', { class: 'btn btn-gold btn-small', onClick: () => openParty(ctx) }, '🎉 Party') : null,
         isCurrent ? null : h('button', { class: 'btn btn-gold btn-small', onClick: () => { ctx.store.transact((d) => moveIn(d, propertyId), 'move-in'); ctx.sfx.play('reward'); ctx.toast(`Welcome home to the ${prop.name}! 🏡`, { type: 'success' }); } }, 'Move in here'),
       );
 
@@ -94,6 +105,7 @@ export default {
           quick('bag', 'Go shopping', 'Fashion & furniture', () => ctx.go('mall')),
           quick('crown', 'Fashion contests', contestLine(s), () => ctx.go('pavilion')),
           quick('home', 'Dream Homes Realty', `${s.properties.owned.length} of 8 homes owned`, () => ctx.go('agency')),
+          quick('heart', 'Friends & love', `${relationshipStatus(s)} · ${metIds(s).length} contacts`, () => ctx.go('phone', { tab: 'contacts' }), unreadCount(s) > 0),
           quick('star', 'My profile', `Level ${s.player.level} · ${fmt(s.player.fame)} fame`, () => ctx.go('profile')),
           quick('city', 'Explore city', 'Tap to travel', () => ctx.go('city')),
         ),
@@ -102,6 +114,14 @@ export default {
           h('p', { class: 'muted' }, tipFor(s)),
         ),
       );
+    }
+
+    async function inviteSomeone() {
+      const s = ctx.store.get();
+      const ids = metIds(s).filter((id) => canInvite(s, id));
+      if (!ids.length) { ctx.toast('Meet people around the city and become friends to invite them over!', { iconName: 'heart' }); return; }
+      const pick = await ctx.modal.open({ title: 'Invite someone over', className: 'wide', body: h('div', { class: 'guest-grid' }, ids.map((id) => h('button', { class: 'guest', onClick: (e) => e.currentTarget.closest('.modal-card').closeModal(id) }, h('div', { class: 'g-av', html: renderAvatarHead(CHARACTER_BY_ID[id]) }), h('small', {}, CHARACTER_BY_ID[id].name.split(' ')[0])))), buttons: [] });
+      if (pick) doInvite(ctx, pick);
     }
 
     function quick(ic, label, sub, fn, alert = false) {
@@ -144,6 +164,9 @@ export default {
     return unsub;
   },
 };
+
+const hostDay = () => dateKey(Date.now());
+const renderAvatarHead = (c) => renderAvatarFn(c.look.appearance, c.look.equipped, { viewBox: '50 12 100 104', shadow: false, align: 'xMidYMid' });
 
 function contestLine(s) {
   const c = s.contests;

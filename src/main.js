@@ -19,6 +19,7 @@ import './styles/creator.css';
 import './styles/careers.css';
 import './styles/pavilion.css';
 import './styles/decorating.css';
+import './styles/social.css';
 
 import { store } from './systems/gameState.js';
 import { loadGame, saveGame } from './systems/saveSystem.js';
@@ -42,11 +43,14 @@ import { pavilion, contest } from './screens/pavilion.js';
 import { agency, homes } from './screens/propertyMarket.js';
 import { fshop } from './screens/furnitureShop.js';
 import { decorate } from './screens/decoratingMode.js';
+import { venue, person, phone } from './screens/social.js';
+import { dailyTexts, unreadCount } from './systems/relationshipSystem.js';
 import { ticker } from './components/ticker.js';
 import { readyJobs } from './systems/careerSystem.js';
 import { claimableCount, questsStale, ensureQuests } from './systems/questSystem.js';
 import { dailyStatus } from './systems/dailySystem.js';
 import { JOB_BY_ID, CAREER_BY_ID } from './data/careers.js';
+import { dateKey as dateKeyOf } from './utils/time.js';
 
 const $ = (s) => document.querySelector(s);
 
@@ -70,7 +74,7 @@ async function boot() {
     nav: $('#nav'),
     hud: $('#hud'),
     app: $('#app'),
-    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest, agency, homes, fshop, decorate },
+    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest, agency, homes, fshop, decorate, venue, person, phone },
     ctx,
   });
   ctx.go = router.go;
@@ -101,12 +105,16 @@ async function boot() {
     const running = Object.keys(s.activeJobs || {}).length;
     router.setBadge('work', ready.length || (running ? '•' : 0));
     router.setBadge('quests', claimableCount(s) + (dailyStatus(s, now).claimedToday ? 0 : 1));
+    const unread = unreadCount(s);
+    const pb = document.querySelector('.phone-btn .tab-badge');
+    if (pb) { pb.hidden = !unread; pb.textContent = unread; }
   };
   store.subscribe((s) => refreshBadges(s));
   ticker.subscribe((now) => {
     const s = store.get();
     if (!s) return;
     if (questsStale(s, now)) store.transact((d) => { ensureQuests(d, now); }, 'quests-roll');
+    if (s.social && s.social.lastTextDay !== dateKeyOf(now)) store.transact((d) => { dailyTexts(d, now); }, 'texts');
     for (const a of readyJobs(s, now)) {
       if (notified.has(a.uid)) continue;
       notified.add(a.uid);

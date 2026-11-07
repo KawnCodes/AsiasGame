@@ -11,6 +11,7 @@ import { careerTitle, careerProgress, isCareerUnlocked } from '../systems/career
 import { dailyStatus } from '../systems/dailySystem.js';
 import { furnitureCount } from '../systems/furnitureInventory.js';
 import { PROPERTY_BY_ID } from '../data/properties.js';
+import { relationshipStatus, metIds } from '../systems/relationshipSystem.js';
 
 export default {
   id: 'profile',
@@ -54,7 +55,8 @@ export default {
           stat(fmt(s.stats.itemsBought), 'Items bought'),
           stat(fmt(s.properties.owned.length), 'Homes owned', `Living in: ${PROPERTY_BY_ID[s.properties.current]?.name}`),
           stat(fmt(furnitureCount(s)), 'Furniture pieces'),
-          stat('—', 'Relationship status', 'Dating opens in a later update'),
+          stat(relationshipStatus(s), 'Relationship status'),
+          stat(fmt(metIds(s).length), 'Friends & contacts'),
         ),
         h('div', { class: 'section-title', html: `${icon('briefcase')}Careers` }),
         h('div', { class: 'career-stats' }, CAREERS.map((c) => {

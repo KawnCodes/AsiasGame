@@ -18,6 +18,7 @@ export const ICONS = {
   close: `<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`,
   briefcase: `<svg viewBox="0 0 24 24"><path d="M9 6V4.8C9 4 9.6 3.4 10.4 3.4h3.2c.8 0 1.4.6 1.4 1.4V6" fill="none" stroke="currentColor" stroke-width="2"/><rect x="2.5" y="6" width="19" height="14.5" rx="3" fill="currentColor"/><path d="M2.5 12h19" stroke="#fff" stroke-width="1.2" opacity=".7"/><path d="M12 9.6l.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" fill="#fff"/></svg>`,
   scroll: `<svg viewBox="0 0 24 24"><path d="M6 3h11a3 3 0 0 1 3 3v1h-3v11a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-1h3z" fill="currentColor"/><path d="M8 8h6M8 11.5h6M8 15h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".9"/></svg>`,
+  phone: `<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3" fill="currentColor"/><rect x="8" y="5" width="8" height="12" rx="1" fill="#ffb3d6"/><path d="M12 10.2c-.7-1-2.2-.4-1.8.7.3.7 1.1 1.2 1.8 1.6.7-.4 1.5-.9 1.8-1.6.4-1.1-1.1-1.7-1.8-.7z" fill="#c23477"/><circle cx="12" cy="19.4" r="1" fill="#fff"/></svg>`,
   mirror: `<svg viewBox="0 0 24 24"><ellipse cx="12" cy="10" rx="6.5" ry="8" fill="currentColor"/><ellipse cx="12" cy="10" rx="4.5" ry="6" fill="#fff" opacity=".6"/><rect x="11" y="18" width="2" height="4" fill="currentColor"/><rect x="8" y="21" width="8" height="1.6" rx=".8" fill="currentColor"/></svg>`,
 };
 

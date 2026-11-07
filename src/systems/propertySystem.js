@@ -9,6 +9,7 @@ import { canAfford, spend } from './economy.js';
 import { recordEvent } from './questSystem.js';
 import { ensureHome } from './decoratingSystem.js';
 import { addFurniture } from './furnitureInventory.js';
+import { notifyMilestone } from './relationshipSystem.js';
 
 export const ownsProperty = (state, id) => state.properties.owned.includes(id);
 
@@ -32,6 +33,7 @@ export function buyProperty(state, id) {
   addFurniture(state, HOUSEWARMING_GIFT, 1);
   state.ledger.purchases.push({ kind: 'property', id, price, at: Date.now() });
   recordEvent(state, 'property', { id });
+  notifyMilestone(state, 'property');
   return { ok: true, property: p };
 }
 

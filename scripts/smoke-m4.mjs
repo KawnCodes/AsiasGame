@@ -162,7 +162,7 @@ try {
   rich.player.level = 6; rich.player.coins = 90000;
   const file = `${OUT}m4-save.json`;
   writeFileSync(file, exportSave(rich));
-  await page.locator('.hud .icon-btn').click();
+  await page.locator('.hud .icon-btn[aria-label="Settings"]').click();
   await page.setInputFiles('.settings input[type=file]', file);
   await page.locator('.modal-actions .btn', { hasText: 'Restore' }).click();
   await page.waitForSelector('.home-actions');

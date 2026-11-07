@@ -4,7 +4,7 @@ An original HTML5 fashion, celebrity & lifestyle simulation game: dress up, shop
 rise from unknown hopeful to fashion icon. Vanilla JavaScript + CSS, built with Vite,
 installable as an offline PWA, structured for later Capacitor (iOS) packaging.
 
-> **Status: Milestone 4 (property & home decorating) on top of Milestones 1–3 (foundation, careers & progression, fashion contests).** See `docs/ROADMAP.md` for what is built
+> **Status: Milestone 5 (relationships & social life) on top of Milestones 1–4 (foundation, careers & progression, fashion contests, homes & decorating).** See `docs/ROADMAP.md` for what is built
 > and what comes next.
 
 ## Run it
@@ -24,8 +24,8 @@ npm run preview      # http://localhost:4173
 ## Test it
 
 ```bash
-npm test             # unit tests (economy, XP, inventory, careers, daily, quests, contests, homes, saves)
-npm run build && npm run smoke   # four browser playthroughs at iPhone size, writes ./screenshots
+npm test             # unit tests (economy, XP, inventory, careers, daily, quests, contests, homes, social, saves)
+npm run build && npm run smoke   # five browser playthroughs at iPhone size, writes ./screenshots
 ```
 
 `npm run smoke` and `npm run icons` use Playwright (installed globally in this
@@ -51,6 +51,7 @@ launch the game works offline.
 | `src/data/careers.js`, `quests.js` | Careers, jobs, mentors' story beats, quests |
 | `src/data/competitions.js` | Contest themes, judges, judge lines, rival names |
 | `src/data/properties.js`, `furniture.js`, `homeStyles.js` | Homes, upgrades, furniture, wallpapers & floors, home styles |
+| `src/data/characters.js`, `venues.js`, `gifts.js` | Cast & dialogue, date venues, gifts |
 | `src/data/appearance.js` | Skin tones, face features, hairstyles, dyes, makeup |
 | `src/data/shops.js`, `locations.js` | Shops, shopkeepers and the city map |
 | `src/systems/` | Game logic (pure functions over state) + IndexedDB save system |

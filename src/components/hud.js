@@ -12,9 +12,10 @@ export function createHud(el, { store, openSettings, go }) {
   const coins = h('div', { class: 'pill pill-coin', 'aria-label': 'Coins', html: `${icon('coin')}<b>0</b>` });
   const gems = h('div', { class: 'pill pill-gem', 'aria-label': 'Gems', html: `${icon('gem')}<b>0</b>` });
   const gear = h('button', { class: 'icon-btn', 'aria-label': 'Settings', html: icon('gear'), onClick: openSettings });
+  const phoneBtn = h('button', { class: 'icon-btn phone-btn', 'aria-label': 'Phone', html: `${icon('phone')}<i class="tab-badge" hidden></i>`, onClick: () => go('phone') });
   el.append(
     h('button', { class: 'hud-left', 'aria-label': 'Open profile', onClick: () => go('profile') }, level, h('div', { class: 'hud-meta' }, name, bar, xpText)),
-    h('div', { class: 'hud-right' }, coins, gems, gear),
+    h('div', { class: 'hud-right' }, coins, gems, phoneBtn, gear),
   );
 
   let last = { coins: null, gems: null, level: null };

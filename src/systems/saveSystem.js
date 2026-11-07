@@ -13,6 +13,7 @@ import { SAVE_VERSION, createNewGameState, emptyEquipped } from './gameState.js'
 import { initStarterHome, ensureHome } from './decoratingSystem.js';
 import { FURNITURE_BY_ID } from '../data/furniture.js';
 import { PROPERTY_BY_ID } from '../data/properties.js';
+import { CHARACTER_BY_ID } from '../data/characters.js';
 import { CLOTHING_BY_ID } from '../data/clothing.js';
 
 const DB_NAME = 'glamour-city';
@@ -48,6 +49,11 @@ export const MIGRATIONS = {
   // Apartment's fixed art becomes real, movable starter furniture (see fillDefaults).
   3: (s) => {
     s.version = 4;
+    return s;
+  },
+  // v4 → v5 (Milestone 5): relationships, messages and visitors — created by fillDefaults().
+  4: (s) => {
+    s.version = 5;
     return s;
   },
 };
@@ -111,6 +117,13 @@ function fillDefaults(s) {
     initStarterHome(out); // pre-Milestone-4 saves: furnish the starter apartment
   }
   for (const pid of out.properties.owned) ensureHome(out, pid);
+  // ---- social (v5) ----
+  const soc = s.social || {};
+  out.social = { ...fresh.social, ...soc, hosting: { ...fresh.social.hosting, ...soc.hosting } };
+  out.social.rel = {};
+  for (const [id, r] of Object.entries(soc.rel || {})) if (CHARACTER_BY_ID[id]) out.social.rel[id] = { storiesSeen: [], ...r };
+  out.social.messages = Array.isArray(soc.messages) ? soc.messages.filter((m) => CHARACTER_BY_ID[m.from]) : [];
+  if (out.social.partner && !CHARACTER_BY_ID[out.social.partner]) out.social.partner = null;
   out.settings = { ...fresh.settings, ...s.settings };
   out.outfits = Array.isArray(s.outfits) ? s.outfits : [];
   // drop equipped references to items that no longer exist in the catalogue

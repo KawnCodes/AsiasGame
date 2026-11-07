@@ -61,12 +61,21 @@ many as you like and move your hub between them. Upgrades apply instantly and gi
 coordinated home styles; rooms are decorated by dragging pieces around, and wallpapers,
 paints and floors are bought once and used anywhere.
 
+## Relationships & friends
+Five romanceable characters and four friends live around the city's venues. Every dialogue
+choice carries a "vibe" (sweet, funny, deep, bold, chic) and each character enjoys different
+vibes, so getting to know someone means learning their taste. Gifts, dates (with an outfit
+bonus for dressing to the venue), story scenes, phone messages, home visits and parties all
+build relationships. One partner at a time; wholesome, age-appropriate storylines.
+
 ## City districts
 Rosewood Street (home, café) · Boutique Avenue (5 fashion shops + salon) · Star Boulevard
 (makeup studio, agency, music & film studios, Grand Pavilion) · Romance Riverside
 (restaurant, park, arcade, social club) · Luxury Hills (realty, furniture).
 
 ## Original cast (so far)
+Love interests: **Leo Valen**, **Theo Marchetti**, **Kai Nakamura**, **Julian Ashford**,
+**Élodie Laurent**. Friends: **Mimi Haru**, **Zara Vale**, **Priya Belle**, **Lottie Pearl**.
 Contest judges: **Madame Céleste**, **Rio Vega**, **Lady Primrose Ashby**. Career mentors: **Vivienne Belle** (modelling), **DJ Marlowe** (singing), **Director
 Okafor** (acting). Shopkeepers: **Poppy** (Petal & Thread), **Madame Céleste** (Maison Étoile), **Jade**
 (Stiletto Lane), **Opal** (Glimmer Jewellers), **Marigold** (The Ribbon Box), **Coco**

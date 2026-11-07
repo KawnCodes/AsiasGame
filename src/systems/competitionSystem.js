@@ -20,6 +20,7 @@ import { seededRandom, dateKey } from '../utils/time.js';
 import { grant } from './economy.js';
 import { recordEvent } from './questSystem.js';
 import { perks } from './propertySystem.js';
+import { notifyMilestone } from './relationshipSystem.js';
 
 export const CATEGORY_IDS = Object.keys(CATEGORIES);
 const CORE = ['top', 'bottom', 'dress', 'outerwear', 'shoes'];
@@ -317,6 +318,7 @@ export function submitEntry(state, contestUid, now = Date.now()) {
   c.board.splice(idx, 1);
   ensureBoard(state, now + 1);
   recordEvent(state, 'contest', { place: me.place, tier: contest.tier, theme: contest.theme }, now);
+  if (me.place === 1) notifyMilestone(state, 'contestWin', now);
 
   return { ok: true, contest, theme, tierInfo: tier, spotlight, contestants, ranked, me, reward, levels: g.levels, percent };
 }

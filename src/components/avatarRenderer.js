@@ -18,6 +18,7 @@ import { hairDefs, hairBack, hairFront } from './art/hairArt.js';
 import { SHAPES, patternDef } from './art/clothingArt.js';
 import { SKIN, EYE_COLOR, HAIR_COLOR, MAKEUP_BY_ID, DEFAULT_APPEARANCE } from '../data/appearance.js';
 import { CLOTHING_BY_ID } from '../data/clothing.js';
+import { MENSWEAR_BY_ID } from '../data/menswear.js';
 import { darken, lighten } from '../utils/color.js';
 
 let counter = 0;
@@ -84,7 +85,7 @@ function defs(id, items, skin, hairHex) {
 export function resolveEquipped(equipped = {}) {
   const out = {};
   for (const [slot, itemId] of Object.entries(equipped)) {
-    const it = itemId && CLOTHING_BY_ID[itemId];
+    const it = itemId && (CLOTHING_BY_ID[itemId] || MENSWEAR_BY_ID[itemId]);
     if (it) out[slot] = it;
   }
   return out;
@@ -104,6 +105,7 @@ export function renderAvatar(appearance = DEFAULT_APPEARANCE, equipped = {}, opt
     eyeColorHex: (EYE_COLOR[ap.eyeColor] || EYE_COLOR.hazel).color,
     hairHex,
     ghost,
+    masc: ap.body === 'masc',
   };
   const eq = resolveEquipped(equipped);
   if (eq.dress) { delete eq.top; delete eq.bottom; }
@@ -127,11 +129,11 @@ export function renderAvatar(appearance = DEFAULT_APPEARANCE, equipped = {}, opt
   ${defs(id, items, skin, hairHex)}
   ${opts.shadow === false ? '' : '<ellipse cx="100" cy="433" rx="34" ry="5" fill="#5a2a5e" opacity=".14"/>'}
   ${ghost ? '' : hairBack(id, ap.hairStyle, hairHex)}
-  ${bodyBack(id, skin)}
-  ${ghost ? '' : baseLayer()}
+  ${bodyBack(id, skin, mk.masc)}
+  ${ghost ? '' : baseLayer(mk.masc)}
   ${garments.join('')}
   ${neck}
-  ${arms(id, skin)}
+  ${arms(id, skin, mk.masc)}
   ${sleeves}
   ${handLayer.join('')}
   ${head(id, skin, ap, mk)}

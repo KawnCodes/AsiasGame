@@ -16,6 +16,8 @@ No external image URLs are used; everything works offline.
 | Furniture (39 types × palettes) | `art/furnitureArt.js` | Temporary |
 | Property exteriors (8) | `art/propertyArt.js` | Temporary |
 | Runway stage | `art/runwayArt.js` | Temporary |
+| Masculine body, short hair, menswear | `art/mascArt.js` | Temporary |
+| Venue scenes (café, restaurant, park, rooftop club) | `art/venueArt.js` | Temporary |
 | Shop interiors & banners | `art/shopArt.js` | Temporary |
 | Icons (UI) | `components/icons.js` | Final-quality vector icons |
 | App icon | `public/icons/icon.svg` (+ PNGs via `npm run icons`) | Temporary |

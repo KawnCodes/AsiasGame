@@ -9,6 +9,7 @@
  * Shapes are authored as left halves and mirrored to stay perfectly symmetrical.
  */
 import { symClosed, mirrorPath, sym } from '../../utils/svgPath.js';
+import { MASC_SHAPES } from './mascArt.js';
 
 // ---- reusable outline fragments ----------------------------------------------------
 const TEE_BODY = (hem = 208) =>
@@ -275,6 +276,8 @@ export const SHAPES = {
   flower_clip: { slot: 'hairAcc', layer: 'top', body: [], details: (c) => { let s = ''; for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2; s += `<circle cx="${(126 + Math.cos(a) * 4).toFixed(1)}" cy="${(36 + Math.sin(a) * 4).toFixed(1)}" r="3.6" fill="${c.base}" stroke="${c.line}" stroke-width=".5"/>`; } return s + `<circle cx="126" cy="36" r="2.4" fill="${c.accent}"/>`; } },
   beret: { slot: 'hairAcc', layer: 'top', body: [], details: (c) => `<path d="M 66 34 C 64 14 112 4 136 22 C 140 28 134 32 128 32 C 110 26 86 28 66 34 Z" fill="${c.base}" stroke="${c.line}" stroke-width=".8"/><circle cx="104" cy="10" r="2" fill="${c.line}"/>` },
 };
+
+Object.assign(SHAPES, MASC_SHAPES); // menswear shapes for the masculine template
 
 // ---------------------------------------------------------------------------------
 const PATTERNS = {

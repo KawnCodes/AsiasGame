@@ -5,6 +5,7 @@
  */
 import { symClosed, mirrorPath } from '../../utils/svgPath.js';
 import { lighten, darken } from '../../utils/color.js';
+import { MASC_HAIR } from './mascArt.js';
 
 const capBack = (bottom = 86) =>
   symClosed(`M 100 15 C 78 15 63 30 63 60 C 63 72 65 ${bottom - 6} 67 ${bottom} C 80 ${bottom - 4} 90 ${bottom - 4} 100 ${bottom - 4}`);
@@ -104,6 +105,7 @@ const STYLES = {
   },
 };
 
+Object.assign(STYLES, MASC_HAIR);
 export const HAIR_STYLE_IDS = Object.keys(STYLES);
 
 export function hairDefs(id, hex) {

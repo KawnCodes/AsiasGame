@@ -86,6 +86,29 @@ export const BALANCE = {
     guestJudge: { coins: 75, xp: 15, paidRoundsPerDay: 10 },
   },
 
+  // ---- relationships & social (Milestone 5) ----
+  social: {
+    vibePoints: { 2: 12, 1: 8, 0: 4, '-1': 0, '-2': -4 }, // chat / date beat points by how much they like the vibe
+    flirtPoints: { 2: 14, 1: 9, 0: 3, '-1': -3, '-2': -6 },
+    giftPoints: { love: 30, like: 15, neutral: 6, dislike: -5 },
+    meetPoints: 20,
+    dailyCaps: { chats: 3, flirts: 2, gifts: 2 }, // interactions beyond these still work, but earn no points
+    dateOutfitBonusPerItem: 2,
+    dateOutfitBonusMax: 10,
+    dateRepeatFactor: 0.25, // second+ date with the same person on one day
+    dateReward: { xp: 40, fame: 15 },
+    replyPoints: 4,
+    visit: { points: 15, xp: 30, fame: 10 },
+    friendHomeVisit: { points: 10, xp: 20 },
+    party: { cost: 500, maxGuests: 4, guestPoints: 12, xp: 100, fame: 50 },
+    partnerNeedsLevel: 4, // "Close" — then ask to be partners
+    datesNeedLevel: 2, // "Friend"
+    flirtNeedsLevel: 2,
+    inviteNeedsLevel: 2,
+    unpartneredCap: 319, // romance points can't pass "Close" until you're partners
+    breakUpPenalty: 0.2,
+  },
+
   // Reference price bands (coins) — the catalogue tests assert items stay inside them.
   priceBands: {
     top: [100, 300],

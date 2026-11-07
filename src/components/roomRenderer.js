@@ -87,6 +87,7 @@ function roomExtras(type) {
  *   opts.avatar   → include the player standing in the room
  *   opts.selected → uid to outline (decorating mode)
  *   opts.preview  → { item, x, y } ghost piece (furniture shop preview)
+ *   opts.people   → [{ look: {appearance, equipped}, x, name }] visitors standing in the room
  */
 export function renderRoom(state, propertyId, roomId, opts = {}) {
   const id = `rm${(++n).toString(36)}`;
@@ -117,8 +118,12 @@ export function renderRoom(state, propertyId, roomId, opts = {}) {
 
   const items = drawOrder(state, layout);
   let body = '';
-  let avatarDone = !opts.avatar;
-  const avatarSVG = () => renderAvatar(state.appearance, state.equipped, { shadow: true }).replace('<svg', `<svg x="${opts.avatarX || 205 - 64}" y="${AVATAR_Y - 280}" width="128" height="282"`);
+  let avatarDone = !opts.avatar && !(opts.people || []).length;
+  const person = (look, x, label) => renderAvatar(look.appearance, look.equipped, { shadow: true, label }).replace('<svg', `<svg x="${x - 64}" y="${AVATAR_Y - 280}" width="128" height="282"`);
+  const avatarSVG = () => [
+    opts.avatar ? person({ appearance: state.appearance, equipped: state.equipped }, opts.avatarX || 205, 'You') : '',
+    ...(opts.people || []).map((p) => person(p.look, p.x, p.name)),
+  ].join('');
   for (const e of items) {
     if (!avatarDone && e.item.placement === 'floor' && e.y > AVATAR_Y) { body += `<g class="room-av">${avatarSVG()}</g>`; avatarDone = true; }
     const s = itemScale(e.item, e.y);

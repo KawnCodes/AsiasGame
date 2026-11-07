@@ -74,6 +74,14 @@ atomic transaction: rivals generated, everyone judged, prize granted under
   piece; decorating mode drags those groups with pointer events (`touch-action: none`),
   converting screen points with `getScreenCTM()`, and commits on release.
 
+## Relationships
+`relationshipSystem.js` keeps `state.social` (relationship records with per-day counters,
+partner, message threads, today's visitors). Points come from data: each choice's vibe ×
+the character's `vibes` table (`gameBalance.social`). Story scenes are data keyed by level and
+shown once. Male characters use `appearance.body = 'masc'`, which switches the renderer to
+the masculine template in `art/mascArt.js` (same frame and anchors). The data model keeps
+characters separate from player-specific relationship state, ready for real friends later.
+
 ## Navigation
 `components/navigation.js` routes between screen modules with slide/fade transitions and
 a history stack. Each screen declares its chrome (HUD + tab bar, HUD only, or none).

@@ -17,7 +17,7 @@ export const DISTRICTS = [
 export const LOCATIONS = [
   // Rosewood Street — home
   { id: 'home', name: 'My Apartment', district: 'home_street', status: 'open', action: { type: 'screen', screen: 'home' }, x: 18, y: 70, art: { kind: 'apartment', w: 150, h: 200, wall: '#ffd8e6', trim: '#ffffff', roof: '#c96f9a' } },
-  { id: 'cafe', name: 'Sugarplum Café', district: 'home_street', status: 'soon', soon: 'Dating & social update', x: 214, y: 120, art: { kind: 'cafe', w: 158, h: 140, wall: '#fff1d6', awning: '#ff8fb8', trim: '#ffffff' } },
+  { id: 'cafe', name: 'Sugarplum Café', district: 'home_street', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'cafe' } }, x: 214, y: 120, art: { kind: 'cafe', w: 158, h: 140, wall: '#fff1d6', awning: '#ff8fb8', trim: '#ffffff' } },
 
   // Boutique Avenue
   { id: 'shop_everyday', name: 'Petal & Thread', district: 'boutique_avenue', status: 'open', action: { type: 'shop', shop: 'everyday' }, x: 16, y: 380, art: { kind: 'boutique', w: 112, h: 150, wall: '#ffe3ee', awning: '#ff7eb6', trim: '#fff' } },
@@ -35,10 +35,10 @@ export const LOCATIONS = [
   { id: 'pageant', name: 'Grand Pavilion', district: 'star_boulevard', status: 'open', action: { type: 'screen', screen: 'pavilion' }, x: 200, y: 1030, art: { kind: 'pavilion', w: 172, h: 92, wall: '#fff', trim: '#e8c26e', roof: '#ffb3cf' } },
 
   // Romance Riverside
-  { id: 'restaurant', name: 'La Rosette', district: 'riverside', status: 'soon', soon: 'Dating update (Milestone 5)', x: 16, y: 1220, art: { kind: 'cafe', w: 150, h: 130, wall: '#fff6ee', awning: '#c2193a', trim: '#fff' } },
-  { id: 'park', name: 'Heart Lake Park', district: 'riverside', status: 'soon', soon: 'Dating update (Milestone 5)', x: 184, y: 1226, art: { kind: 'park', w: 188, h: 124 } },
+  { id: 'restaurant', name: 'La Rosette', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'restaurant' } }, x: 16, y: 1220, art: { kind: 'cafe', w: 150, h: 130, wall: '#fff6ee', awning: '#c2193a', trim: '#fff' } },
+  { id: 'park', name: 'Heart Lake Park', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'park' } }, x: 184, y: 1226, art: { kind: 'park', w: 188, h: 124 } },
   { id: 'arcade', name: 'Glitter Arcade', district: 'riverside', status: 'soon', soon: 'Minigames update (Milestone 6)', x: 16, y: 1382, art: { kind: 'studio', w: 150, h: 64, wall: '#3a2c5c', trim: '#7ce0ff', roof: '#ff7eb6' } },
-  { id: 'social', name: 'The Social Club', district: 'riverside', status: 'soon', soon: 'Social update (Milestone 5)', x: 184, y: 1376, art: { kind: 'boutique', w: 188, h: 70, wall: '#e8f7ff', awning: '#7cc6f2', trim: '#fff' } },
+  { id: 'social', name: 'The Social Club', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'club' } }, x: 184, y: 1376, art: { kind: 'boutique', w: 188, h: 70, wall: '#e8f7ff', awning: '#7cc6f2', trim: '#fff' } },
 
   // Luxury Hills
   { id: 'property', name: 'Dream Homes Realty', district: 'luxury_hills', status: 'open', action: { type: 'screen', screen: 'agency' }, x: 16, y: 1510, art: { kind: 'house', w: 150, h: 130, wall: '#fffaf0', trim: '#e8c26e', roof: '#6f8fd8' } },
