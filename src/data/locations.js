@@ -41,6 +41,6 @@ export const LOCATIONS = [
   { id: 'social', name: 'The Social Club', district: 'riverside', status: 'soon', soon: 'Social update (Milestone 5)', x: 184, y: 1376, art: { kind: 'boutique', w: 188, h: 70, wall: '#e8f7ff', awning: '#7cc6f2', trim: '#fff' } },
 
   // Luxury Hills
-  { id: 'property', name: 'Dream Homes Realty', district: 'luxury_hills', status: 'soon', soon: 'Property update (Milestone 4)', x: 16, y: 1510, art: { kind: 'house', w: 150, h: 130, wall: '#fffaf0', trim: '#e8c26e', roof: '#6f8fd8' } },
-  { id: 'furniture', name: 'Cosy Living & Glam Interiors', district: 'luxury_hills', status: 'soon', soon: 'Home decorating update (Milestone 4)', x: 184, y: 1510, art: { kind: 'boutique', w: 188, h: 130, wall: '#f5ece2', awning: '#b08a6a', trim: '#fff' } },
+  { id: 'property', name: 'Dream Homes Realty', district: 'luxury_hills', status: 'open', action: { type: 'screen', screen: 'agency' }, x: 16, y: 1510, art: { kind: 'house', w: 150, h: 130, wall: '#fffaf0', trim: '#e8c26e', roof: '#6f8fd8' } },
+  { id: 'furniture', name: 'Furniture Row', district: 'luxury_hills', status: 'open', action: { type: 'screen', screen: 'mall', params: { section: 'home' } }, x: 184, y: 1510, art: { kind: 'boutique', w: 188, h: 130, wall: '#f5ece2', awning: '#b08a6a', trim: '#fff' } },
 ];

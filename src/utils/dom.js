@@ -23,6 +23,12 @@ export function h(tag, props = {}, ...children) {
   return el;
 }
 
+/** Like Element.append, but skips null/undefined/false (Element.append would print "null"). */
+export function appendTo(el, ...children) {
+  for (const c of children.flat(Infinity)) if (c !== null && c !== undefined && c !== false) el.append(c);
+  return el;
+}
+
 export const clear = (el) => { while (el.firstChild) el.removeChild(el.firstChild); return el; };
 
 export const fmt = (n) => Math.floor(n).toLocaleString('en-GB');

@@ -2,7 +2,7 @@
  * CAREERS — the Work hub (all three careers at a glance) and each career's studio
  * screen with its job board and live countdown.
  */
-import { h, fmt } from '../utils/dom.js';
+import { h, appendTo, fmt } from '../utils/dom.js';
 import { icon } from '../components/icons.js';
 import { renderAvatar } from '../components/avatarRenderer.js';
 import { ticker } from '../components/ticker.js';
@@ -127,7 +127,7 @@ export const career = {
       const cs = s.careers[c.id];
       const prog = careerProgress(s, c.id);
       head.innerHTML = '';
-      head.append(
+      appendTo(head, 
         h('div', { class: 'mentor', html: renderAvatar(c.mentorLook.appearance, c.mentorLook.equipped, { viewBox: '30 0 140 250', shadow: false }) }),
         h('div', { class: 'studio-info' },
           h('div', { class: 'career-name' }, `${c.icon} ${c.name}`),
@@ -152,7 +152,7 @@ export const career = {
       const now = Date.now();
       const ready = isReady(a, now);
       activeBox.classList.add('on', `fx-${c.id}`);
-      activeBox.append(
+      appendTo(activeBox, 
         h('div', { class: 'aj-stage' }, h('div', { class: 'aj-avatar', html: renderAvatar(s.appearance, s.equipped, { viewBox: '20 0 160 440', shadow: false }) }), h('div', { class: 'aj-fx', 'aria-hidden': 'true' })),
         h('div', { class: 'aj-info' },
           h('small', { class: 'muted' }, ready ? 'Finished!' : 'Now working'),

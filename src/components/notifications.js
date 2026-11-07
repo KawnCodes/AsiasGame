@@ -20,7 +20,7 @@ export function toast(message, { type = 'info', iconName, duration = 2400 } = {}
 
 /** Sparkle burst at a screen point (or element centre). */
 export function sparkleBurst(target, count = 14) {
-  if (document.documentElement.classList.contains('reduce-motion')) return;
+  if (!target || document.documentElement.classList.contains('reduce-motion')) return;
   let x, y;
   if (target instanceof Element) {
     const r = target.getBoundingClientRect();

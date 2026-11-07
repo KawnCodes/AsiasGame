@@ -3,7 +3,7 @@
  *   pavilion : lobby with the contest board, theme of the day, stats & guest judging
  *   contest  : dressing room → runway show → judges' panel → results & prizes
  */
-import { h, fmt } from '../utils/dom.js';
+import { h, appendTo, fmt } from '../utils/dom.js';
 import { icon } from '../components/icons.js';
 import { renderAvatar, renderItemThumb } from '../components/avatarRenderer.js';
 import { itemCard } from '../components/itemCard.js';
@@ -69,7 +69,7 @@ export const pavilion = {
         const theme = THEME_BY_ID[b.theme];
         const tier = BALANCE.contests.tiers[b.tier];
         const isSpot = b.theme === spot;
-        list.append(h('button', { class: `contest-card tier-${b.tier} ${isSpot ? 'spot' : ''}`, onClick: () => { ctx.sfx.play('tap'); ctx.go('contest', { uid: b.uid }); } },
+        appendTo(list, h('button', { class: `contest-card tier-${b.tier} ${isSpot ? 'spot' : ''}`, onClick: () => { ctx.sfx.play('tap'); ctx.go('contest', { uid: b.uid }); } },
           h('div', { class: 'cc-icon' }, theme.icon),
           h('div', { class: 'cc-info' },
             h('div', { class: 'cc-row' }, h('b', {}, theme.name), h('span', { class: `tier-pill t-${b.tier}` }, tier.name)),
@@ -225,7 +225,7 @@ export const contest = {
         if (!items.length) grid.append(h('div', { class: 'empty' }, 'None of your pieces fit this theme yet — Boutique Avenue can help!', h('br'), h('button', { class: 'btn btn-gold btn-small', onClick: () => ctx.go('mall') }, 'Go shopping')));
         for (const it of items) {
           const fit = tagFit(it.styles, theme);
-          grid.append(itemCard({
+          appendTo(grid, itemCard({
             thumbHTML: renderItemThumb(it), name: it.name, rarity: it.rarity, equipped: isEquipped(s, it.id),
             footer: fit > 0 ? h('div', { class: 'meta fit' }, '♥'.repeat(fit >= 0.7 ? 3 : fit >= 0.4 ? 2 : 1)) : null,
             onClick: () => { ctx.store.transact((d) => toggleEquip(d, it.id), 'equip'); ctx.sfx.play('equip'); renderAll(); },
@@ -239,7 +239,7 @@ export const contest = {
           for (const e of list) {
             if (!owns(s, kind, e.id)) continue;
             const fit = tagFit(e.styles, theme) > 0 || theme.makeup?.includes(e.id) || theme.hairColors?.includes(e.id);
-            row.append(h('button', {
+            appendTo(row, h('button', {
               class: `bopt ${s.appearance[key] === e.id ? 'selected' : ''}`,
               onClick: () => { ctx.store.transact((d) => setAppearance(d, { [key]: e.id }), 'beauty'); ctx.sfx.play('equip'); renderAll(); },
             }, swatch(e), h('span', {}, e.name), fit ? h('i', {}, '♥') : null));

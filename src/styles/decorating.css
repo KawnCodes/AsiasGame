@@ -1,0 +1,80 @@
+/* ---------- home ---------- */
+.room .room-bg svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.room-tabs { padding-top: 0; }
+.home-actions { display: flex; gap: 6px; padding: 8px 12px 0; flex-wrap: wrap; }
+.home-actions .btn { flex: 1; min-width: 120px; }
+.home-actions .btn .ico svg { width: 16px; height: 16px; }
+.gift-spot { left: 9% !important; top: 90% !important; }
+.hs-dot.gift { background: radial-gradient(circle at 35% 30%, #fff4c4, #ffb84d); font-size: 16px; }
+.screen-home .quick-grid { grid-template-columns: repeat(2, 1fr); }
+
+/* ---------- agency & my homes ---------- */
+.prop-list { display: flex; flex-direction: column; gap: 12px; padding: 0 12px 14px; }
+.prop-card { border-radius: 22px; overflow: hidden; background: #fff; box-shadow: var(--shadow), inset 0 0 0 2px #ffe0ee; }
+.prop-card.owned { box-shadow: var(--shadow), inset 0 0 0 2px #bfe8d4; }
+.prop-card.current { box-shadow: var(--shadow-lg), inset 0 0 0 3px #ffd36e; }
+.prop-card.locked .prop-ext { filter: saturate(.6); }
+.prop-ext { height: 150px; }
+.prop-ext svg { width: 100%; height: 100%; display: block; }
+.prop-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 5px; }
+.prop-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.prop-row b { font-family: var(--font-title); font-size: 18px; }
+.prop-blurb { margin: 0; }
+.room-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+.room-pill { font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: #fff0f7; color: #c23477; }
+.room-pill.out { background: #e6f7ec; color: #2f8a5a; }
+.prop-body .btn-row { margin-top: 4px; align-items: center; }
+.tour-room { width: 100%; aspect-ratio: 390 / 420; border-radius: 16px; overflow: hidden; margin-bottom: 8px; }
+.tour-room svg { width: 100%; height: 100%; display: block; }
+.tour { text-align: left; }
+.upgrade-list { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.upgrade { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 2px #ffe0ee; }
+.upgrade.owned { background: #f3fbf6; box-shadow: inset 0 0 0 2px #bfe8d4; }
+.up-ico { font-size: 26px; }
+.up-body { flex: 1; display: flex; flex-direction: column; }
+.upgrade .btn { flex: none; }
+
+/* ---------- furniture shops ---------- */
+.fshop-banner { position: relative; padding: 12px 12px 14px; background: var(--wall); border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; box-shadow: var(--shadow); text-align: center; }
+.fshop-banner .back-btn { position: absolute; left: 10px; top: 10px; }
+.fshop-sign { display: inline-flex; flex-direction: column; padding: 6px 18px; border-radius: 14px; background: #fff; box-shadow: inset 0 0 0 2px var(--accent); }
+.fshop-sign b { font-family: var(--font-title); font-size: 19px; color: var(--sign); }
+.fshop-sign small { font-size: 10.5px; color: var(--plum-soft); }
+.fshop-banner p { margin: 8px 30px 0; }
+.fshop-banner.dark .fshop-sign { background: #2f2340; }
+.fshop-banner.dark p { color: #f6e7c1; }
+.preview-wrap { display: flex; gap: 8px; margin: 10px 0 4px; }
+.shop-room { position: relative; flex: 0 0 56%; aspect-ratio: 390 / 420; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow), inset 0 0 0 3px #fff; }
+.shop-room svg { width: 100%; height: 100%; display: block; }
+.preview-label { position: absolute; left: 6px; top: 6px; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 9px; background: rgba(255, 255, 255, .9); color: var(--plum); }
+.preview-item { animation: fadeIn .5s both; filter: drop-shadow(0 0 6px rgba(255, 126, 182, .9)); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.fdetail { min-width: 0; }
+.fdetail h3 { font-size: 15px; }
+.func-note { font-size: 11px; font-weight: 800; color: #9a6ee8; }
+.room-select { width: 100%; font: inherit; font-size: 12px; padding: 6px; border-radius: 10px; border: 2px solid #ffd6e8; background: #fff; color: var(--plum); }
+.fdetail .btn .price { color: inherit; }
+.stepper { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 6px 0; }
+.stepper .btn { min-width: 44px; font-size: 20px; }
+.stepper .qty { font-size: 22px; min-width: 30px; }
+.mall-art.furn { display: grid; place-items: center; font-size: 40px; }
+.screen-header.sub { position: static; }
+
+/* ---------- decorating mode ---------- */
+.screen-decorate { background: #fff6fb; }
+.deco-head h2 { line-height: 1; }
+.deco-canvas { position: relative; margin: 0 10px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg), inset 0 0 0 3px #fff; touch-action: none; -webkit-user-select: none; user-select: none; }
+.deco-canvas svg { width: 100%; height: 100%; display: block; }
+.deco-canvas .fitem { cursor: grab; }
+.deco-canvas .fitem.dragging { cursor: grabbing; filter: drop-shadow(0 6px 8px rgba(90, 30, 80, .35)); }
+.deco-canvas .fitem.sel { filter: drop-shadow(0 0 4px rgba(240, 85, 155, .8)); }
+.sel-box { animation: dash 1s linear infinite; }
+.deco-tools { display: flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 52px; flex-wrap: wrap; }
+.deco-tools .tool-name { flex: 1 1 100%; font-family: var(--font-title); font-size: 15px; }
+.deco-tools .btn { flex: 1; }
+.deco-drawer { padding-bottom: 20px; }
+.grid.small { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.grid.small .card .name { font-size: 10.5px; min-height: 26px; }
+.count-badge { position: absolute; top: 4px; right: 4px; min-width: 22px; height: 20px; padding: 0 5px; border-radius: 10px; background: #9a6ee8; color: #fff; font-size: 11px; font-weight: 800; line-height: 20px; }
+@keyframes dash { to { stroke-dashoffset: -20; } }
+.grid > .empty { grid-column: 1 / -1; }

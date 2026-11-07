@@ -5,7 +5,7 @@ import { renderAvatar, renderItemThumb } from '../components/avatarRenderer.js';
 import { itemCard, rarityPill } from '../components/itemCard.js';
 import { addTwinkles } from '../components/sparkles.js';
 import { CLOTHING_BY_ID, CATEGORIES } from '../data/clothing.js';
-import { toggleEquip, toggleFavourite, saveOutfit, applyOutfit, deleteOutfit, toggleOutfitFavourite, isEquipped, MAX_OUTFITS } from '../systems/inventory.js';
+import { toggleEquip, toggleFavourite, saveOutfit, applyOutfit, deleteOutfit, toggleOutfitFavourite, isEquipped, maxOutfits } from '../systems/inventory.js';
 import { emptyEquipped } from '../systems/gameState.js';
 
 let lastFilter = 'all';
@@ -112,7 +112,7 @@ export default {
 
     async function saveLook() {
       const s = ctx.store.get();
-      if (s.outfits.length >= MAX_OUTFITS) { ctx.toast(`You can keep up to ${MAX_OUTFITS} looks — delete one first.`, { type: 'error' }); return; }
+      if (s.outfits.length >= maxOutfits(s)) { ctx.toast(`You can keep up to ${maxOutfits(s)} looks — delete one first.`, { type: 'error' }); return; }
       const name = await ctx.modal.prompt('Name this look', { placeholder: `Look ${s.outfits.length + 1}` });
       if (name === null) return;
       const r = ctx.store.transact((d) => { const res = saveOutfit(d, name); if (res.ok) d.stats.outfitsSaved += 1; return res; }, 'outfit');

@@ -1,5 +1,5 @@
 /** QUESTS — daily gift, daily / weekly / story quests with progress and claims. */
-import { h, fmt } from '../utils/dom.js';
+import { h, appendTo, fmt } from '../utils/dom.js';
 import { icon } from '../components/icons.js';
 import { ticker } from '../components/ticker.js';
 import { celebrate, rewardChips } from '../components/rewards.js';
@@ -46,7 +46,7 @@ export default {
       tabs.innerHTML = '';
       for (const [id, label] of [['daily', 'Daily'], ['weekly', 'Weekly'], ['story', 'Milestones']]) {
         const n = listQuests(s, id).filter((q) => q.done && !q.claimed).length;
-        tabs.append(h('button', { class: `chip ${tab === id ? 'active' : ''}`, onClick: () => { tab = lastTab = id; ctx.sfx.play('tap'); render(); } }, label, n ? h('span', { class: 'count' }, n) : null));
+        appendTo(tabs, h('button', { class: `chip ${tab === id ? 'active' : ''}`, onClick: () => { tab = lastTab = id; ctx.sfx.play('tap'); render(); } }, label, n ? h('span', { class: 'count' }, n) : null));
       }
     }
 
@@ -62,7 +62,7 @@ export default {
       if (tab === 'story') quests = [...quests].sort((a, b) => (a.claimed - b.claimed) || (b.done - a.done));
       for (const q of quests) {
         const pct = Math.round((q.value / q.target) * 100);
-        list.append(h('div', { class: `quest ${q.claimed ? 'claimed' : q.done ? 'done' : ''}` },
+        appendTo(list, h('div', { class: `quest ${q.claimed ? 'claimed' : q.done ? 'done' : ''}` },
           h('div', { class: 'q-main' },
             h('div', { class: 'q-title' }, h('b', {}, q.def.title), q.def.category ? h('span', { class: 'tag' }, q.def.category) : null),
             h('div', { class: 'muted tiny' }, q.def.text),

@@ -12,7 +12,10 @@ No external image URLs are used; everything works offline.
 | Hairstyles (11) | `art/hairArt.js` | Temporary |
 | Garments & accessories (58 shapes) | `art/clothingArt.js` | Temporary |
 | City buildings (10 kinds) | `art/cityArt.js` | Temporary |
-| Apartment interior | `art/roomArt.js` | Temporary (becomes furniture-based in M4) |
+| Room architecture, wallpapers, floors, window views | `components/roomRenderer.js` | Temporary |
+| Furniture (39 types × palettes) | `art/furnitureArt.js` | Temporary |
+| Property exteriors (8) | `art/propertyArt.js` | Temporary |
+| Runway stage | `art/runwayArt.js` | Temporary |
 | Shop interiors & banners | `art/shopArt.js` | Temporary |
 | Icons (UI) | `components/icons.js` | Final-quality vector icons |
 | App icon | `public/icons/icon.svg` (+ PNGs via `npm run icons`) | Temporary |
@@ -38,3 +41,9 @@ No external image URLs are used; everything works offline.
 Add an optional `art: 'assets/clothing/<id>.webp'` (and `sleeves:` for sleeve layers) to a
 catalogue item; the renderer should emit an `<image>` at the full template frame in the
 same layer slot. Keep the procedural shape as a fallback.
+
+## Room template (furniture artists)
+Rooms are 390 × 420 units: wall y 22–280, floor y 300–416. Floor pieces are drawn with their
+anchor at bottom-centre (art spans x −w/2..w/2, y −h..0); wall pieces and rugs are anchored
+at their centre. Footprints (w × h) per furniture type live in `FURNITURE_KINDS`
+(`src/data/furniture.js`). Floor pieces are scaled 0.78–1.0 by depth.

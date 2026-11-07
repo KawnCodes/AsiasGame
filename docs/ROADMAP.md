@@ -4,9 +4,9 @@
 |---|---|---|
 | 1 | Playable foundation | Done |
 | 2 | Fast careers & progression (jobs, timers, XP/levels, fame, daily rewards, promotions, quests) | Done |
-| 3 | Fashion competitions (themes, AI contestants, judging, rankings, rewards) | **Done (this build)** |
-| 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | Next |
-| 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | Planned |
+| 3 | Fashion competitions (themes, AI contestants, judging, rankings, rewards) | Done |
+| 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | **Done (this build)** |
+| 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | Next |
 | 6 | Minigames & extras (memory, match-3, styling challenge, photoshoots, covers, resale) | Planned |
 | 7 | Polish & release (content expansion, audio, tutorial, accessibility, perf, regression tests) | Planned |
 
@@ -85,8 +85,35 @@ Calibration (simulated, 200 contests per tier): a well-styled *starter* wardrobe
 ~28 % of Rising Star contests; a styled budget wardrobe ~90 % Rising / ~68 % City /
 ~52 % Gala; best-in-catalogue looks ~65 % of Gala contests.
 
-## Milestone 4 — plan
-Property agency (8 homes, 5,000 → 300,000 coins), multiple owned homes and "move in",
-room scenes per property, furniture catalogue + 4 furniture shops, furniture inventory,
-touch drag-and-drop decorating with bounds/anchors/layering, rotate/store/remove,
-wallpaper/wall colour/flooring, instant home upgrades, persistent layouts (save v4).
+## Milestone 4 — delivered
+* **Dream Homes Realty** (Luxury Hills): 8 properties — Starter Apartment (free), Cosy Studio
+  5,000, Chic City Apartment 15,000, Luxury Loft 35,000, Modern Townhouse 60,000, Beach House
+  100,000, Luxury Penthouse 175,000, Celebrity Mansion 300,000 — each with its own exterior,
+  window view, room list (1–9 rooms) and level requirement. Tour before buying.
+* **Own several homes**, move in to any of them (your home hub moves with you), visit others.
+* **11 instant upgrades** (no construction timers): Walk-in Wardrobe (+12 saved looks),
+  Luxury Vanity (+10 % contest coins), Home Recording Studio / Photography Room / Screening
+  Room (+10 % singing / modelling / acting coins), Extra Bedroom, Dining Room, Balcony,
+  Garden, Swimming Pool, Spa Bathroom — new rooms appear immediately and show on the exterior.
+* **Four furniture shops** (Cosy Living, Glam Interiors, Luxe Maison, Dream Decor) on
+  Furniture Row and in the Shops tab: 155 pieces across 39 furniture types and **10 home
+  styles**, plus 39 wallpapers, paints and floors. Pieces preview inside your own room;
+  furniture can be bought in multiples.
+* **Decorating mode**: touch/mouse drag-and-drop with live zone clamping (floor pieces stay on
+  the floor, wall pieces on the wall), perspective scaling, automatic depth sorting, flip,
+  store to inventory, place from storage into the free-est spot, wallpaper & floor changes,
+  40 pieces per room. Every change auto-saves.
+* **Furniture is never lost**: each piece is an instance that is either placed in exactly
+  one room or in storage, and can move between rooms and between homes.
+* **Interactive furniture**: bed (rest & save), wardrobe, vanity, mirrors and the trophy
+  shelf work in any home; the Starter Apartment's fixed art became real, movable furniture.
+* Quests: daily (place 3 pieces, buy 2), weekly (buy 5, place 15) and 7 home milestones.
+* Save schema v4 (older saves get a furnished starter apartment; layouts are repaired if
+  inconsistent). Tests: 108 unit tests; browser playthroughs M1–M4 (16 + 20 + 17 + 26
+  checks), M4 drags with real touch events.
+
+## Milestone 5 — plan
+Romanceable NPCs (4+) with portraits, backstories, favourite gifts and branching dialogue;
+relationship levels, dates at the café/restaurant/park, phone messages and contacts,
+simulated friends with profiles and homes to visit, inviting partners/friends home
+(visitors appear in your rooms), parties that grant fame and relationship points.

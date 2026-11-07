@@ -10,6 +10,9 @@
  * localStorage so the game is still playable; the UI shows no difference.
  */
 import { SAVE_VERSION, createNewGameState, emptyEquipped } from './gameState.js';
+import { initStarterHome, ensureHome } from './decoratingSystem.js';
+import { FURNITURE_BY_ID } from '../data/furniture.js';
+import { PROPERTY_BY_ID } from '../data/properties.js';
 import { CLOTHING_BY_ID } from '../data/clothing.js';
 
 const DB_NAME = 'glamour-city';
@@ -41,6 +44,12 @@ export const MIGRATIONS = {
     s.version = 3;
     return s;
   },
+  // v3 → v4 (Milestone 4): properties, furniture instances, room layouts. The Starter
+  // Apartment's fixed art becomes real, movable starter furniture (see fillDefaults).
+  3: (s) => {
+    s.version = 4;
+    return s;
+  },
 };
 
 /** Fill in any missing fields from a fresh state so older saves never crash new code. */
@@ -70,6 +79,38 @@ function fillDefaults(s) {
   out.contests.board = Array.isArray(s.contests?.board) ? s.contests.board : [];
   out.contests.history = Array.isArray(s.contests?.history) ? s.contests.history : [];
   out.trophies = Array.isArray(s.trophies) ? s.trophies : [];
+  // ---- homes & furniture (v4) ----
+  out.properties.owned = (out.properties.owned || []).filter((id) => PROPERTY_BY_ID[id]);
+  if (!out.properties.owned.includes('starter_apartment')) out.properties.owned.unshift('starter_apartment');
+  if (!out.properties.owned.includes(out.properties.current)) out.properties.current = 'starter_apartment';
+  out.properties.upgrades = { ...(s.properties?.upgrades || {}) };
+  out.inventory.surfaces = Array.isArray(s.inventory?.surfaces) ? s.inventory.surfaces : [];
+  if (s.furniture?.items) {
+    out.furniture = { nextId: s.furniture.nextId || 1, items: {} };
+    for (const [uid, v] of Object.entries(s.furniture.items)) if (FURNITURE_BY_ID[v?.id]) out.furniture.items[uid] = { id: v.id, at: v.at || null };
+    out.homes = s.homes || {};
+    // Room layouts are the source of truth: rebuild every piece's `at` from them, dropping
+    // ghost entries (unknown furniture) and any piece listed in two rooms.
+    for (const v of Object.values(out.furniture.items)) v.at = null;
+    for (const [pid, home] of Object.entries(out.homes)) {
+      if (!PROPERTY_BY_ID[pid]) { delete out.homes[pid]; continue; }
+      for (const [rid, room] of Object.entries(home.rooms || {})) {
+        room.placed = room.placed || {};
+        for (const uid of Object.keys(room.placed)) {
+          const inst = out.furniture.items[uid];
+          if (!inst || inst.at) { delete room.placed[uid]; continue; }
+          inst.at = { property: pid, room: rid };
+        }
+      }
+    }
+    const maxId = Math.max(0, ...Object.keys(out.furniture.items).map((u) => Number(u.slice(1)) || 0));
+    out.furniture.nextId = Math.max(out.furniture.nextId, maxId + 1);
+  } else {
+    out.furniture = { nextId: 1, items: {} };
+    out.homes = {};
+    initStarterHome(out); // pre-Milestone-4 saves: furnish the starter apartment
+  }
+  for (const pid of out.properties.owned) ensureHome(out, pid);
   out.settings = { ...fresh.settings, ...s.settings };
   out.outfits = Array.isArray(s.outfits) ? s.outfits : [];
   // drop equipped references to items that no longer exist in the catalogue

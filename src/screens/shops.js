@@ -3,7 +3,7 @@
  * Shops are data-driven (data/shops.js); every purchasable kind (clothing,
  * hairstyles, hair dyes, makeup) shares one try-on → buy → wear flow.
  */
-import { h } from '../utils/dom.js';
+import { h, appendTo } from '../utils/dom.js';
 import { icon } from '../components/icons.js';
 import { renderAvatar, renderItemThumb } from '../components/avatarRenderer.js';
 import { itemCard, priceTag, rarityPill } from '../components/itemCard.js';
@@ -17,6 +17,7 @@ import { HAIRSTYLES, HAIR_COLORS, MAKEUP } from '../data/appearance.js';
 import { owns, purchase, equip, setAppearance } from '../systems/inventory.js';
 import { canAfford, priceAmount, priceCurrency } from '../systems/economy.js';
 import { priceOf } from '../systems/catalog.js';
+import { FURNITURE_SHOPS } from '../data/furniture.js';
 
 const HAIR_VIEW = '36 0 128 150';
 const FACE_VIEW = '64 40 72 64';
@@ -72,13 +73,21 @@ export const mall = {
         h('span', { class: 'mall-go', html: icon('back') }),
       ));
     }
-    const soon = LOCATIONS.filter((l) => l.id === 'furniture');
+    const homeList = h('div', { class: 'mall-list home-shops' });
+    for (const fs of FURNITURE_SHOPS) {
+      homeList.append(h('button', { class: 'mall-card', style: { '--accent': fs.theme.accent }, onClick: () => { ctx.sfx.play('tap'); ctx.go('fshop', { shopId: fs.id }); } },
+        h('div', { class: 'mall-art furn', style: { background: fs.theme.wall }, html: `<span>${{ cosy_living: '🛋️', glam_interiors: '🪞', luxe_maison: '👑', dream_decor: '🌿' }[fs.id]}</span>` }),
+        h('div', { class: 'mall-info' }, h('b', {}, fs.name), h('small', { class: 'mall-type' }, fs.type), h('span', { class: 'muted tiny' }, fs.tagline)),
+        h('span', { class: 'mall-go', html: icon('back') }),
+      ));
+    }
+    const homeTitle = h('div', { class: 'screen-header sub' }, h('h2', {}, h('span', { class: 'script' }, 'Furniture'), ' Row'));
     el.append(
       h('div', { class: 'screen-header' }, h('h2', {}, h('span', { class: 'script' }, 'Boutique'), ' Avenue')),
-      h('p', { class: 'muted tiny pad' }, 'Seven shops are open. Tap one to browse, try things on, and treat yourself!'),
-      list,
-      h('div', { class: 'panel soon-panel' }, h('b', {}, '🛋️ Furniture & home décor shops'), h('p', { class: 'muted tiny' }, `${soon[0]?.name} open with the ${soon[0]?.soon}.`)),
+      h('p', { class: 'muted tiny pad' }, 'Seven fashion & beauty shops, plus four furniture stores for your homes.'),
+      list, homeTitle, homeList,
     );
+    if (params.section === 'home') requestAnimationFrame(() => el.scrollTo({ top: homeTitle.offsetTop - 8 }));
   },
 };
 
@@ -183,7 +192,7 @@ export const shop = {
       const price = priceOf(e.kind, e.entry);
       const afford = canAfford(s, price);
       const wearing = isWearing(s, e);
-      detail.append(
+      appendTo(detail, 
         h('h3', {}, e.name),
         h('div', { class: 'row-gap' }, rarityPill(e.rarity), owned ? h('span', { class: 'owned-tag' }, '✓ Owned') : priceTag(price, afford)),
         e.styles.length ? h('div', { class: 'tags' }, e.styles.map((t) => h('span', { class: 'tag' }, t))) : null,

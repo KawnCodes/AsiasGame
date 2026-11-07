@@ -45,7 +45,7 @@ export default {
       }
       ctx.sfx.play('tap');
       savedScroll = el.scrollTop;
-      if (loc.action.type === 'screen') ctx.go(loc.action.screen);
+      if (loc.action.type === 'screen') ctx.go(loc.action.screen, loc.action.params || {});
       else if (loc.action.type === 'shop') ctx.go('shop', { shopId: loc.action.shop });
       else if (loc.action.type === 'career') ctx.go('career', { career: loc.action.career });
     }

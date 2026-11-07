@@ -61,6 +61,19 @@ useful for tests and for verifying results if contests ever move online. Enterin
 atomic transaction: rivals generated, everyone judged, prize granted under
 `contest:<uid>`, history/trophies updated and the board slot replaced.
 
+## Homes & decorating
+* `propertySystem.js` — buy / move in / instant upgrades, and `perks()` (read by careers,
+  contests and outfit limits).
+* `furnitureInventory.js` — furniture *instances* (`f<n>` uids) with `at: null | {property, room}`;
+  surfaces owned once.
+* `decoratingSystem.js` — room zones, `clampPosition`, perspective `floorScale`, depth
+  `drawOrder`, `findSpot`, place / move / flip / store / setSurface.
+  Room layouts are the source of truth; on load the save system rebuilds every piece's `at`
+  from them and drops duplicates, so a piece can never be in two places.
+* `components/roomRenderer.js` draws a room as one SVG with `<g class="fitem" data-uid>` per
+  piece; decorating mode drags those groups with pointer events (`touch-action: none`),
+  converting screen points with `getScreenCTM()`, and commits on release.
+
 ## Navigation
 `components/navigation.js` routes between screen modules with slide/fade transitions and
 a history stack. Each screen declares its chrome (HUD + tab bar, HUD only, or none).

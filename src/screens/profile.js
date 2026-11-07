@@ -9,6 +9,8 @@ import { HAIRSTYLES, MAKEUP, HAIR_COLORS } from '../data/appearance.js';
 import { CAREERS } from '../data/careers.js';
 import { careerTitle, careerProgress, isCareerUnlocked } from '../systems/careerSystem.js';
 import { dailyStatus } from '../systems/dailySystem.js';
+import { furnitureCount } from '../systems/furnitureInventory.js';
+import { PROPERTY_BY_ID } from '../data/properties.js';
 
 export default {
   id: 'profile',
@@ -50,7 +52,8 @@ export default {
           stat(fmt(makeup), 'Makeup products'),
           stat(fmt(s.outfits.length), 'Saved looks'),
           stat(fmt(s.stats.itemsBought), 'Items bought'),
-          stat(fmt(s.properties.owned.length), 'Homes owned', 'Starter Apartment'),
+          stat(fmt(s.properties.owned.length), 'Homes owned', `Living in: ${PROPERTY_BY_ID[s.properties.current]?.name}`),
+          stat(fmt(furnitureCount(s)), 'Furniture pieces'),
           stat('—', 'Relationship status', 'Dating opens in a later update'),
         ),
         h('div', { class: 'section-title', html: `${icon('briefcase')}Careers` }),
@@ -75,7 +78,7 @@ export default {
           stat(fmt(s.contests.podiums), 'Podium finishes'),
           stat(`${s.contests.bestPercent}%`, 'Best contest score'),
           stat(fmt((s.trophies || []).length), 'Trophies'),
-          stat('0', 'Home design awards', 'Decorating arrives in Milestone 4'),
+          stat('0', 'Home design awards', 'Home design contests arrive in Milestone 6'),
           stat(`${Math.round(s.stats.playSeconds / 60)} min`, 'Time in the city'),
         ),
       ),

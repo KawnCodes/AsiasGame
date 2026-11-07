@@ -7,8 +7,11 @@ import { HAIRSTYLE, HAIR_COLOR, MAKEUP_BY_ID } from '../data/appearance.js';
 import { getEntry, priceOf, INVENTORY_KEY } from './catalog.js';
 import { canAfford, spend } from './economy.js';
 import { recordEvent } from './questSystem.js';
+import { perks } from './propertySystem.js';
 
 export const MAX_OUTFITS = 24;
+/** Saved-look limit, raised by the Walk-in Wardrobe upgrade. */
+export const maxOutfits = (state) => MAX_OUTFITS + perks(state).outfitSlots;
 
 export function owns(state, kind, id) {
   const key = INVENTORY_KEY[kind];
@@ -87,7 +90,7 @@ export function setAppearance(state, patch) {
 
 // ---------------- saved outfits ----------------
 export function saveOutfit(state, name) {
-  if (state.outfits.length >= MAX_OUTFITS) return { ok: false, reason: 'outfit-limit' };
+  if (state.outfits.length >= maxOutfits(state)) return { ok: false, reason: 'outfit-limit' };
   const clean = String(name || '').trim().slice(0, 24) || `Look ${state.outfits.length + 1}`;
   const outfit = {
     id: `o${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`,

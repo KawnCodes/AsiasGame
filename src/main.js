@@ -18,6 +18,7 @@ import './styles/houses.css';
 import './styles/creator.css';
 import './styles/careers.css';
 import './styles/pavilion.css';
+import './styles/decorating.css';
 
 import { store } from './systems/gameState.js';
 import { loadGame, saveGame } from './systems/saveSystem.js';
@@ -38,6 +39,9 @@ import profile from './screens/profile.js';
 import { work, career } from './screens/careers.js';
 import quests from './screens/quests.js';
 import { pavilion, contest } from './screens/pavilion.js';
+import { agency, homes } from './screens/propertyMarket.js';
+import { fshop } from './screens/furnitureShop.js';
+import { decorate } from './screens/decoratingMode.js';
 import { ticker } from './components/ticker.js';
 import { readyJobs } from './systems/careerSystem.js';
 import { claimableCount, questsStale, ensureQuests } from './systems/questSystem.js';
@@ -66,7 +70,7 @@ async function boot() {
     nav: $('#nav'),
     hud: $('#hud'),
     app: $('#app'),
-    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest },
+    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest, agency, homes, fshop, decorate },
     ctx,
   });
   ctx.go = router.go;

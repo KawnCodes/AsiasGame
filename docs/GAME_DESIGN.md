@@ -54,6 +54,13 @@ each judge weights them differently and gives 1–10, for a total out of 30. Riv
 generated from the same catalogue with tier-based skill and scored by the same code, so
 better shopping and styling genuinely win more often.
 
+## Homes & decorating
+Eight properties from a free starter apartment to a 300,000-coin celebrity mansion; own as
+many as you like and move your hub between them. Upgrades apply instantly and give perks
+(career and contest coin boosts, more saved looks). Furniture comes from four shops in ten
+coordinated home styles; rooms are decorated by dragging pieces around, and wallpapers,
+paints and floors are bought once and used anywhere.
+
 ## City districts
 Rosewood Street (home, café) · Boutique Avenue (5 fashion shops + salon) · Star Boulevard
 (makeup studio, agency, music & film studios, Grand Pavilion) · Romance Riverside

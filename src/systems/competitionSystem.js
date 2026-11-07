@@ -19,6 +19,7 @@ import { hexToRgb } from '../utils/color.js';
 import { seededRandom, dateKey } from '../utils/time.js';
 import { grant } from './economy.js';
 import { recordEvent } from './questSystem.js';
+import { perks } from './propertySystem.js';
 
 export const CATEGORY_IDS = Object.keys(CATEGORIES);
 const CORE = ['top', 'bottom', 'dress', 'outerwear', 'shoes'];
@@ -297,6 +298,8 @@ export function submitEntry(state, contestUid, now = Date.now()) {
   const me = contestants[0];
   const spotlight = contest.theme === spotlightTheme(now);
   const reward = prizeFor(me.place, contest.tier, spotlight);
+  const vanity = perks(state).contestCoins; // Luxury Vanity upgrade
+  if (vanity) reward.coins = Math.round(reward.coins * (1 + vanity));
   const g = grant(state, reward, `contest:${contest.uid}`);
   if (!g.ok) return { ok: false, reason: 'already-entered' };
 

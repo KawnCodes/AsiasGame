@@ -11,6 +11,7 @@ import { CAREERS, CAREER_BY_ID, JOB_BY_ID, jobReward } from '../data/careers.js'
 import { CLOTHING_BY_ID } from '../data/clothing.js';
 import { grant } from './economy.js';
 import { recordEvent } from './questSystem.js';
+import { perks } from './propertySystem.js';
 
 export function emptyCareers() {
   return Object.fromEntries(CAREERS.map((c) => [c.id, { xp: 0, level: 1, jobsDone: 0 }]));
@@ -56,7 +57,9 @@ export function styleMatches(state, job) {
 export function previewReward(state, job) {
   const base = jobReward(job);
   const bonus = styleMatches(state, job) >= BALANCE.jobs.styleMatchesNeeded;
-  return { ...base, coins: bonus ? Math.round(base.coins * (1 + BALANCE.jobs.styleBonus)) : base.coins, styleBonus: bonus };
+  const homePerk = perks(state).careerCoins[job.career] || 0; // home studio upgrades
+  const mult = (bonus ? 1 + BALANCE.jobs.styleBonus : 1) + homePerk;
+  return { ...base, coins: Math.round(base.coins * mult), styleBonus: bonus, homeBonus: homePerk > 0 };
 }
 
 export function startJob(state, jobId, now = Date.now()) {

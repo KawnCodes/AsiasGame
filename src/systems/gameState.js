@@ -12,8 +12,10 @@ import { emptyCareers } from './careerSystem.js';
 import { emptyDaily } from './dailySystem.js';
 import { emptyQuests } from './questSystem.js';
 import { emptyContests } from './competitionSystem.js';
+import { emptyFurniture } from './furnitureInventory.js';
+import { initStarterHome } from './decoratingSystem.js';
 
-export const SAVE_VERSION = 3;
+export const SAVE_VERSION = 4;
 
 export const STARTER_OUTFITS = [
   { id: 'sunny', name: 'Sunny Day', equipped: { top: 'top_daisy_tee', bottom: 'bot_denim_mini', shoes: 'sh_blush_flats', earrings: 'ear_silver_studs' } },
@@ -30,7 +32,7 @@ export function createNewGameState({ name = 'Star', appearance = {}, outfitId = 
   const outfit = STARTER_OUTFITS.find((o) => o.id === outfitId) || STARTER_OUTFITS[0];
   const clothing = {};
   for (const id of STARTER_CLOTHING) clothing[id] = { acquiredAt: now, favourite: false, starter: true };
-  return {
+  const state = {
     version: SAVE_VERSION,
     createdAt: now,
     updatedAt: now,
@@ -49,9 +51,12 @@ export function createNewGameState({ name = 'Star', appearance = {}, outfitId = 
       hairstyles: [], // purchased (free starter styles are always owned)
       hairColors: [],
       makeup: [],
+      surfaces: [], // purchased wallpapers / paints / floors (free basics are always owned)
     },
     outfits: [],
-    properties: { owned: [BALANCE.start.property], current: BALANCE.start.property },
+    properties: { owned: [BALANCE.start.property], current: BALANCE.start.property, upgrades: {} },
+    furniture: emptyFurniture(), // furniture instances (placed or in storage)
+    homes: {}, // room layouts per property
     ledger: { processed: {}, purchases: [] },
     careers: emptyCareers(),
     activeJobs: {}, // careerId → { uid, jobId, startedAt, endsAt, reward }
@@ -60,9 +65,11 @@ export function createNewGameState({ name = 'Star', appearance = {}, outfitId = 
     contests: emptyContests(), // board, history, wins… (Milestone 3)
     trophies: [], // { id, theme, tier, place, at } for top-3 finishes
     stats: { itemsBought: 0, coinsSpent: 0, gemsSpent: 0, coinsEarned: 0, gemsEarned: 0, outfitsSaved: 0, playSeconds: 0, jobsCompleted: 0, jobCoins: 0, promotions: 0, questsCompleted: 0 },
-    flags: { cityHintSeen: false, homeHintSeen: false, workHintSeen: false },
+    flags: { cityHintSeen: false, homeHintSeen: false, workHintSeen: false, decoHintSeen: false },
     settings: { sound: true, reducedMotion: false },
   };
+  initStarterHome(state);
+  return state;
 }
 
 export function createStore(initial = null) {
