@@ -13,7 +13,7 @@ import { furnitureThumb } from '../components/art/furnitureArt.js';
 import { surfaceSwatch } from './furnitureShop.js';
 import { FURNITURE_BY_ID, SURFACES } from '../data/furniture.js';
 import { PROPERTY_BY_ID, ROOM_TYPES } from '../data/properties.js';
-import { storedGroups, ownsSurface } from '../systems/furnitureInventory.js';
+import { storedGroups, ownsSurface, sellFurniture, furnitureResale } from '../systems/furnitureInventory.js';
 import {
   ROOM, roomsOf, roomDef, layoutOf, placeItem, moveItem, flipItem, storeItem, setSurface, clampPosition, itemScale, placedCount, MAX_ITEMS_PER_ROOM,
 } from '../systems/decoratingSystem.js';
@@ -28,6 +28,7 @@ export const decorate = {
     let roomId = roomDef(s0, propertyId, params.roomId) ? params.roomId : roomsOf(s0, propertyId)[0].id;
     let selected = null;
     let tab = 'storage';
+    let selling = false;
     let drag = null;
 
     const roomTabs = h('div', { class: 'chips room-tabs' });
@@ -96,11 +97,14 @@ export const decorate = {
         const grid = h('div', { class: 'grid small' });
         if (!groups.length) grid.append(h('div', { class: 'empty' }, 'Storage is empty. Pieces you store or buy appear here.'));
         for (const g of groups) {
-          appendTo(grid, h('button', { class: 'card', onClick: () => place(g.uids[0]) },
+          const canSell = g.item.sellable && !g.item.starter && g.item.price.coins > 0;
+          appendTo(grid, h('button', { class: `card ${selling ? (canSell ? 'sellable' : 'unsellable') : ''}`, onClick: () => (selling ? sell(g) : place(g.uids[0])) },
             h('div', { class: 'thumb', html: furnitureThumb(g.item, { trophies: s.trophies }) }), h('div', { class: 'name' }, g.item.name),
+            selling ? h('div', { class: 'meta sell-price' }, canSell ? `${fmt(furnitureResale(g.item).coins)} coins` : 'Keepsake') : null,
             g.uids.length > 1 ? h('span', { class: 'count-badge' }, `×${g.uids.length}`) : null));
         }
         drawer.append(grid, h('div', { class: 'pad btn-row' },
+          h('button', { class: `btn btn-small ${selling ? 'btn-primary' : 'btn-soft'} sell-mode`, onClick: () => { selling = !selling; ctx.sfx.play('tap'); renderDrawer(); } }, selling ? '✓ Done selling' : '💰 Sell pieces'),
           h('button', { class: 'btn btn-gold btn-small', onClick: () => ctx.go('mall', { section: 'home' }) }, 'Shop furniture')));
         return;
       }
@@ -115,6 +119,20 @@ export const decorate = {
       }
       const more = SURFACES.filter((sf) => sf.kind === kind && !ownsSurface(s, sf.id)).length;
       appendTo(drawer, grid, more ? h('div', { class: 'pad' }, h('button', { class: 'btn btn-gold btn-small', onClick: () => ctx.go('fshop', { shopId: 'dream_decor' }) }, `${more} more at Dream Decor`)) : null);
+    }
+
+    async function sell(g) {
+      const { item } = g;
+      if (!(item.sellable && !item.starter && item.price.coins > 0)) { ctx.sfx.play('error'); ctx.toast(`${item.name} is a free keepsake and can't be sold.`, { type: 'info' }); return; }
+      const value = furnitureResale(item).coins;
+      const ok = await ctx.modal.confirm('Sell this piece?', `Sell one <b>${item.name}</b> for <b>${fmt(value)} coins</b>?`, 'Sell', 'Keep it');
+      if (!ok) return;
+      const r = ctx.store.transact((d) => sellFurniture(d, g.uids[0]), 'sell-furniture');
+      if (r.ok === false) { ctx.sfx.play('error'); ctx.toast(r.message || 'Could not sell that.', { type: 'error' }); return; }
+      await ctx.saveNow();
+      ctx.sfx.play('buy');
+      ctx.toast(`Sold ${item.name} for ${fmt(value)} coins`, { type: 'success' });
+      renderDrawer();
     }
 
     function place(uid) {

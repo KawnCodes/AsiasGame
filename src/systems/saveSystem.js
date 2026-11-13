@@ -56,6 +56,11 @@ export const MIGRATIONS = {
     s.version = 5;
     return s;
   },
+  // v5 → v6 (Milestone 6): minigames, photo album, home design contests — via fillDefaults().
+  5: (s) => {
+    s.version = 6;
+    return s;
+  },
 };
 
 /** Fill in any missing fields from a fresh state so older saves never crash new code. */
@@ -124,6 +129,13 @@ function fillDefaults(s) {
   for (const [id, r] of Object.entries(soc.rel || {})) if (CHARACTER_BY_ID[id]) out.social.rel[id] = { storiesSeen: [], ...r };
   out.social.messages = Array.isArray(soc.messages) ? soc.messages.filter((m) => CHARACTER_BY_ID[m.from]) : [];
   if (out.social.partner && !CHARACTER_BY_ID[out.social.partner]) out.social.partner = null;
+  // ---- arcade, photos, home contests (v6) ----
+  out.minigames = { ...fresh.minigames, ...s.minigames, best: { ...(s.minigames?.best || {}) } };
+  out.photos = Array.isArray(s.photos) ? s.photos.filter((p) => p && p.id && p.look) : [];
+  out.homeContests = { ...fresh.homeContests, ...s.homeContests };
+  out.homeContests.board = Array.isArray(s.homeContests?.board) ? s.homeContests.board : [];
+  out.homeContests.history = Array.isArray(s.homeContests?.history) ? s.homeContests.history : [];
+  out.homeAwards = Array.isArray(s.homeAwards) ? s.homeAwards : [];
   out.settings = { ...fresh.settings, ...s.settings };
   out.outfits = Array.isArray(s.outfits) ? s.outfits : [];
   // drop equipped references to items that no longer exist in the catalogue

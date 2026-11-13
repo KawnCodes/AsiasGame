@@ -230,7 +230,7 @@ export const shop = {
       const price = priceOf(e.kind, e.entry);
       if (!canAfford(s, price)) {
         ctx.sfx.play('error');
-        ctx.toast(`You need ${priceAmount(price) - s.player[priceCurrency(price)]} more ${priceCurrency(price)}. Careers & contests arrive soon!`, { type: 'error' });
+        ctx.toast(`You need ${priceAmount(price) - s.player[priceCurrency(price)]} more ${priceCurrency(price)}. Earn more with a job, a contest or the Glitter Arcade!`, { type: 'error' });
         return;
       }
       const cur = priceCurrency(price);

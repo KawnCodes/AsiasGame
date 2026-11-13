@@ -37,7 +37,7 @@ export const LOCATIONS = [
   // Romance Riverside
   { id: 'restaurant', name: 'La Rosette', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'restaurant' } }, x: 16, y: 1220, art: { kind: 'cafe', w: 150, h: 130, wall: '#fff6ee', awning: '#c2193a', trim: '#fff' } },
   { id: 'park', name: 'Heart Lake Park', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'park' } }, x: 184, y: 1226, art: { kind: 'park', w: 188, h: 124 } },
-  { id: 'arcade', name: 'Glitter Arcade', district: 'riverside', status: 'soon', soon: 'Minigames update (Milestone 6)', x: 16, y: 1382, art: { kind: 'studio', w: 150, h: 64, wall: '#3a2c5c', trim: '#7ce0ff', roof: '#ff7eb6' } },
+  { id: 'arcade', name: 'Glitter Arcade', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'arcade' }, x: 16, y: 1382, art: { kind: 'studio', w: 150, h: 64, wall: '#3a2c5c', trim: '#7ce0ff', roof: '#ff7eb6' } },
   { id: 'social', name: 'The Social Club', district: 'riverside', status: 'open', action: { type: 'screen', screen: 'venue', params: { id: 'club' } }, x: 184, y: 1376, art: { kind: 'boutique', w: 188, h: 70, wall: '#e8f7ff', awning: '#7cc6f2', trim: '#fff' } },
 
   // Luxury Hills

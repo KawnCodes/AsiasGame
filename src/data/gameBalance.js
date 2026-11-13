@@ -109,6 +109,27 @@ export const BALANCE = {
     breakUpPenalty: 0.2,
   },
 
+  // ---- minigames, photos & home design contests (Milestone 6) ----
+  minigames: {
+    reward: { coins: 250, xp: 50 }, // a normal completed game (also BALANCE.rewards.minigame)
+    // multipliers: memory by difficulty, others by result
+    unfinishedFactor: 0.5, // lost Match-3 / 0-star styling still pays half — no punishing grind
+    starBonus: { 3: 0.3, 2: 0.15, 1: 0, 0: 0 },
+  },
+  photos: { albumMax: 60, dailyReward: { xp: 30, fame: 20 }, coverReward: { fame: 40 } },
+  homeContests: {
+    boardSize: 2,
+    minItems: 3,
+    rivals: 4,
+    skill: [0.25, 0.75],
+    prizes: {
+      1: { coins: 1500, gems: 10, xp: 200, fame: 50 },
+      2: { coins: 700, gems: 3, xp: 120, fame: 30 },
+      3: { coins: 400, gems: 0, xp: 90, fame: 20 },
+      entry: { coins: 150, gems: 0, xp: 50, fame: 10 },
+    },
+  },
+
   // Reference price bands (coins) — the catalogue tests assert items stay inside them.
   priceBands: {
     top: [100, 300],

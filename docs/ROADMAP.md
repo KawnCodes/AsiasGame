@@ -6,9 +6,9 @@
 | 2 | Fast careers & progression (jobs, timers, XP/levels, fame, daily rewards, promotions, quests) | Done |
 | 3 | Fashion competitions (themes, AI contestants, judging, rankings, rewards) | Done |
 | 4 | Property & home decorating (agency, buying, furniture shops, drag-and-drop, upgrades) | Done |
-| 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | **Done (this build)** |
-| 6 | Minigames & extras (memory, match-3, styling challenge, photoshoots, covers, resale) | Next |
-| 7 | Polish & release (content expansion, audio, tutorial, accessibility, perf, regression tests) | Planned |
+| 5 | Relationships & social (romance NPCs, dialogue, dates, messages, friends, visits, parties) | Done |
+| 6 | Minigames & extras (memory, match-3, styling challenge, photoshoots, covers, design awards, resale) | **Done (this build)** |
+| 7 | Polish & release (content expansion, audio, tutorial, accessibility, perf, regression tests) | Next |
 
 ## Milestone 1 — delivered
 * Vite project, mobile-first responsive layout (phone frame on desktop), safe-area aware.
@@ -138,8 +138,38 @@ Calibration (simulated, 200 contests per tier): a well-styled *starter* wardrobe
 * Social quests (daily, weekly, 6 milestones), relationship status on the profile,
   save schema v5. Tests: 130 unit tests; browser playthroughs M1–M5 (16+20+17+26+18).
 
-## Milestone 6 — plan
-Fashion Memory, Jewellery Match-3 and Timed Styling Challenge minigames at the Glitter
-Arcade (250 coins + 50 XP each); photoshoots (outfit, pose, background — including your
-homes) with frames, fictional magazine covers, an album and PNG export; home design
-contests; clothing & furniture resale at 50 %.
+## Milestone 6 — delivered
+* **Glitter Arcade** is open on the map (the last "coming soon" building). Three
+  replayable games, no cooldowns; every finished game pays 250 coins + 50 XP, more for
+  stars and harder boards, half if you run out of moves (`BALANCE.minigames`):
+  * **Fashion Memory** — pairs of real accessories from the catalogue; Easy 6 / Medium 8 /
+    Hard 10 pairs (×1 / ×1.25 / ×1.6 pay); stars from move efficiency.
+  * **Jewellery Match-3** — 7×7 board, tap-then-tap or swipe, invalid swaps bounce back for
+    free, lines of 4/5 score bonuses, cascades multiply, auto-reshuffle when stuck.
+    Target 1,400 in 20 moves (tuned by simulation: a random player wins ~48 %, a greedy
+    player ~88 %).
+  * **Timed Styling Challenge** — a surprise contest theme and a studio rail with on-theme
+    pieces and decoys; 45 seconds; judged by the same code as the fashion contests.
+* **Photo Studio** (Home → 📸 Photo, or the Belle Model Agency): 7 poses, 8 backdrops
+  including any of your own decorated rooms, 6 frames, and **magazine covers** with four
+  fictional mastheads (ÉTOILE, GLOSS Weekly, Glamour City Life, BELLE), preset or custom
+  headlines. Advanced poses/sets/magazines unlock with Modelling levels. First photo of
+  the day pays fame + XP; your first cover is a bonus.
+* **Album** (60 photos): filter all / covers / favourites, favourite, delete, and
+  **export as PNG** (600×800, rasterised from the photo's self-contained SVG).
+* **Home Design Awards** (Home → 🏆 Awards): two open briefs from 8 themes; pick any
+  owned room (live judge meter), judged on theme, colour harmony, coordination, layout and
+  variety against four rival rooms that are generated, drawn and scored by the same code.
+  1st: 1,500 coins + 10 gems; every entry pays; top-3 finishes become design awards.
+* **Resale** at 50 % with a confirmation: clothing from the wardrobe (not while worn;
+  gem items refund gems), furniture from decorating storage ("Sell pieces" mode; placed
+  pieces must be stored first). Free starter pieces can't be sold.
+* Profile shows design awards, arcade games, photos/covers and items sold; new daily,
+  weekly and story quests; save schema v6. Tests: 150 unit tests; browser playthroughs
+  M1–M6 (M6 alone: 34 checks incl. a PNG export and a reload).
+
+## Milestone 7 — plan
+Polish and release: tutorial/onboarding, sound design and music, accessibility pass
+(focus order, screen-reader labels, contrast, larger-text mode), performance (render
+caching, album virtualisation), content expansion (more clothing, furniture, themes,
+story scenes), Capacitor packaging for iOS/Android, and a full regression suite.

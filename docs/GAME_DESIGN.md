@@ -30,11 +30,13 @@ Several activities are always available so the player is never forced down one p
 | Level 1 → 2 | 500 XP; `requiredXP = round(500 × 1.12^(level−1))` |
 | Level-up | 500 coins + 5 gems (granted once per level, ledger-guarded) |
 | Daily gift | 1,000 coins + 10 gems (day 1) rising to 3,000 + 30 on day 7; local calendar day reset |
-| Minigame (M6) | 250 coins + 50 XP |
+| Minigames | 250 coins + 50 XP per finished game (+15/30/50 % for 1/2/3 stars; Memory Medium ×1.25, Hard ×1.6; half if unfinished); no cooldowns |
+| Photos | first photo of the day 30 XP + 20 fame; first magazine cover +40 fame; album holds 60 |
+| Home design awards | 1st 1,500 coins + 10 gems · 2nd 700 + 3 gems · 3rd 400 · any entry 150; XP + fame too |
 | Contests | finish ≥ 200 coins · 3rd 500 · 2nd 800 + 5 gems · win 1,500 + 20 gems; City ×1.6, Gala ×2.5; theme of the day +50 % coins |
 | Career promotion | 2,000 coins + 15 gems per career level |
 | Quests | daily 300–800 coins, weekly 1,000–2,500 + gems, milestones up to 5,000 + 40 gems |
-| Resale (M6) | 50 % of price |
+| Resale | 50 % of price (gems back for gem items); not worn/placed items; free starter pieces can't be sold |
 
 Price bands: tops 100–300, skirts/trousers 150–500, dresses 300–1,000, premium dresses
 1,000–3,000, shoes 100–600, hairstyles 200–800, accessories 50–400. Rare+ items may exceed
@@ -67,6 +69,14 @@ choice carries a "vibe" (sweet, funny, deep, bold, chic) and each character enjo
 vibes, so getting to know someone means learning their taste. Gifts, dates (with an outfit
 bonus for dressing to the venue), story scenes, phone messages, home visits and parties all
 build relationships. One partner at a time; wholesome, age-appropriate storylines.
+
+## Arcade, photos & design awards
+The **Glitter Arcade** offers three quick games — Fashion Memory, Jewellery Match-3 and a
+45-second Styling Challenge — that always pay, so they're a reliable top-up between jobs.
+The **Photo Studio** turns outfits into keepsakes and magazine covers (the Modelling career
+unlocks poses, sets and mastheads), and the album exports PNGs to share. **Home Design
+Awards** give decorating a goal: briefs ask for a style, palette and room type, and rival
+designers' rooms are shown side by side with yours after judging.
 
 ## City districts
 Rosewood Street (home, café) · Boutique Avenue (5 fashion shops + salon) · Star Boulevard

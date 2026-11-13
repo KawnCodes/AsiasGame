@@ -118,9 +118,12 @@ export const career = {
     const head = h('div', { class: 'studio-head', style: { '--c': c.color } });
     const activeBox = h('div', { class: 'active-job' });
     const jobsBox = h('div', { class: 'job-list' });
-    el.append(
+    appendTo(el,
       h('div', { class: 'screen-header' }, h('button', { class: 'back-btn', onClick: () => ctx.back('work'), html: `${icon('back')}Work` }), h('h2', { class: 'studio-title' }, c.studio)),
-      head, activeBox, h('div', { class: 'section-title pad-x', html: `${icon('star')}Job board` }), jobsBox,
+      head,
+      c.id === 'modelling' ? h('button', { class: 'panel photo-promo', onClick: () => ctx.go('photo') },
+        h('b', {}, '📸 Agency Photo Studio'), h('span', { class: 'muted tiny' }, 'Shoot photos & magazine covers. New poses, sets and magazines unlock as your modelling level grows.')) : null,
+      activeBox, h('div', { class: 'section-title pad-x', html: `${icon('star')}Job board` }), jobsBox,
     );
 
     function renderHead(s) {

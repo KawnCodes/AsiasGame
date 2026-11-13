@@ -72,7 +72,7 @@ function item(id, name, shape, color, o = {}) {
     styles: o.s || [],
     shop: o.shop || DEFAULT_SHOP[category],
     starter: !!o.starter,
-    sellable: o.sellable !== false,
+    sellable: o.sellable !== false && !o.starter, // free starter pieces can't be sold
   };
 }
 

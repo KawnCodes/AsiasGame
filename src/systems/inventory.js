@@ -8,6 +8,7 @@ import { getEntry, priceOf, INVENTORY_KEY } from './catalog.js';
 import { canAfford, spend } from './economy.js';
 import { recordEvent } from './questSystem.js';
 import { perks } from './propertySystem.js';
+import { BALANCE } from '../data/gameBalance.js';
 
 export const MAX_OUTFITS = 24;
 /** Saved-look limit, raised by the Walk-in Wardrobe upgrade. */
@@ -133,3 +134,24 @@ export function toggleOutfitFavourite(state, outfitId) {
 }
 
 export const wardrobeSize = (state) => Object.keys(state.inventory.clothing).length;
+
+// ---------------- resale ----------------
+/** Resale value of a clothing item: 50 % of its price, in the currency it was bought with. */
+export function clothingResale(item) {
+  const rate = BALANCE.resaleRate;
+  return item.price.gems ? { gems: Math.floor(item.price.gems * rate) } : { coins: Math.floor((item.price.coins || 0) * rate) };
+}
+
+/** Sell an owned clothing item. Worn items must be taken off first; starter items can't be sold. */
+export function sellClothing(state, itemId) {
+  const item = CLOTHING_BY_ID[itemId];
+  if (!item || !state.inventory.clothing[itemId]) return { ok: false, reason: 'not-owned' };
+  if (!item.sellable) return { ok: false, reason: 'not-sellable' };
+  if (isEquipped(state, itemId)) return { ok: false, reason: 'equipped', message: 'Take it off before selling it.' };
+  const value = clothingResale(item);
+  delete state.inventory.clothing[itemId];
+  if (value.gems) state.player.gems += value.gems; else state.player.coins += value.coins;
+  state.stats.itemsSold = (state.stats.itemsSold || 0) + 1;
+  recordEvent(state, 'sell', { kind: 'clothing' });
+  return { ok: true, value };
+}

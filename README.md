@@ -4,7 +4,7 @@ An original HTML5 fashion, celebrity & lifestyle simulation game: dress up, shop
 rise from unknown hopeful to fashion icon. Vanilla JavaScript + CSS, built with Vite,
 installable as an offline PWA, structured for later Capacitor (iOS) packaging.
 
-> **Status: Milestone 5 (relationships & social life) on top of Milestones 1–4 (foundation, careers & progression, fashion contests, homes & decorating).** See `docs/ROADMAP.md` for what is built
+> **Status: Milestone 6 (Glitter Arcade minigames, photo studio & magazine covers, home design awards, resale) on top of Milestones 1–5 (foundation, careers & progression, fashion contests, homes & decorating, relationships & social life).** See `docs/ROADMAP.md` for what is built
 > and what comes next.
 
 ## Run it
@@ -25,7 +25,7 @@ npm run preview      # http://localhost:4173
 
 ```bash
 npm test             # unit tests (economy, XP, inventory, careers, daily, quests, contests, homes, social, saves)
-npm run build && npm run smoke   # five browser playthroughs at iPhone size, writes ./screenshots
+npm run build && npm run smoke   # six browser playthroughs at iPhone size, writes ./screenshots
 ```
 
 `npm run smoke` and `npm run icons` use Playwright (installed globally in this

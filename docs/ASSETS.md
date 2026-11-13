@@ -19,6 +19,8 @@ No external image URLs are used; everything works offline.
 | Masculine body, short hair, menswear | `art/mascArt.js` | Temporary |
 | Venue scenes (café, restaurant, park, rooftop club) | `art/venueArt.js` | Temporary |
 | Shop interiors & banners | `art/shopArt.js` | Temporary |
+| Photo backdrops, frames, magazine mastheads (fictional) | `art/photoArt.js` | Temporary |
+| Arcade gems & memory card backs | `screens/arcade.js`, `styles/arcade.css` | Temporary |
 | Icons (UI) | `components/icons.js` | Final-quality vector icons |
 | App icon | `public/icons/icon.svg` (+ PNGs via `npm run icons`) | Temporary |
 | Fonts | Quicksand, Playfair Display, Parisienne (OFL, bundled via @fontsource) | Final |

@@ -20,6 +20,7 @@ import './styles/careers.css';
 import './styles/pavilion.css';
 import './styles/decorating.css';
 import './styles/social.css';
+import './styles/arcade.css';
 
 import { store } from './systems/gameState.js';
 import { loadGame, saveGame } from './systems/saveSystem.js';
@@ -44,6 +45,9 @@ import { agency, homes } from './screens/propertyMarket.js';
 import { fshop } from './screens/furnitureShop.js';
 import { decorate } from './screens/decoratingMode.js';
 import { venue, person, phone } from './screens/social.js';
+import { arcade, memory, match3, styling } from './screens/arcade.js';
+import { photo, album } from './screens/photoStudio.js';
+import { design } from './screens/designAwards.js';
 import { dailyTexts, unreadCount } from './systems/relationshipSystem.js';
 import { ticker } from './components/ticker.js';
 import { readyJobs } from './systems/careerSystem.js';
@@ -74,7 +78,7 @@ async function boot() {
     nav: $('#nav'),
     hud: $('#hud'),
     app: $('#app'),
-    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest, agency, homes, fshop, decorate, venue, person, phone },
+    screens: { welcome, creator, city, home, wardrobe, mall, shop, profile, work, career, quests, pavilion, contest, agency, homes, fshop, decorate, venue, person, phone, arcade, memory, match3, styling, photo, album, design },
     ctx,
   });
   ctx.go = router.go;

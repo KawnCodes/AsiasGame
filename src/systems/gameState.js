@@ -15,8 +15,10 @@ import { emptyContests } from './competitionSystem.js';
 import { emptyFurniture } from './furnitureInventory.js';
 import { initStarterHome } from './decoratingSystem.js';
 import { emptySocial } from './relationshipSystem.js';
+import { emptyMinigames } from './minigameSystem.js';
+import { emptyHomeContests } from './homeContestSystem.js';
 
-export const SAVE_VERSION = 5;
+export const SAVE_VERSION = 6;
 
 export const STARTER_OUTFITS = [
   { id: 'sunny', name: 'Sunny Day', equipped: { top: 'top_daisy_tee', bottom: 'bot_denim_mini', shoes: 'sh_blush_flats', earrings: 'ear_silver_studs' } },
@@ -59,6 +61,10 @@ export function createNewGameState({ name = 'Star', appearance = {}, outfitId = 
     furniture: emptyFurniture(), // furniture instances (placed or in storage)
     homes: {}, // room layouts per property
     social: emptySocial(), // relationships, messages, visitors (Milestone 5)
+    minigames: emptyMinigames(), // arcade stats (Milestone 6)
+    photos: [], // photo album: specs re-rendered on demand
+    homeContests: emptyHomeContests(),
+    homeAwards: [], // top-3 home design finishes
     ledger: { processed: {}, purchases: [] },
     careers: emptyCareers(),
     activeJobs: {}, // careerId → { uid, jobId, startedAt, endsAt, reward }

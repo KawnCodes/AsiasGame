@@ -47,7 +47,7 @@ export default {
       h('div', { class: 'welcome-actions' },
         continueBtn,
         newBtn,
-        h('div', { class: 'tiny muted version' }, 'v0.5 · Milestone 5 preview'),
+        h('div', { class: 'tiny muted version' }, 'v0.6 · Milestone 6 preview'),
       ),
     );
     addTwinkles(view, 16);

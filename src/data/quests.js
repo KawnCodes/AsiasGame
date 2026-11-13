@@ -6,7 +6,8 @@
  *   { event: 'jobCoins', amount: true, target: 2000 }   // adds payload.amount
  *   { stat: (s) => s.player.level, target: 5 }          // reads state directly
  * Events emitted by the systems: job, jobCoins, buy, outfit, daily, promotion, restyle, contest,
- * buyFurniture, decorate, property, upgrade, meet, chat, flirt, gift, date, partner, visit, party.
+ * buyFurniture, decorate, property, upgrade, meet, chat, flirt, gift, date, partner, visit, party,
+ * minigame, photo, homeContest, sell.
  *
  * Daily quests: QUESTS_PER_DAY are picked from DAILY_POOL by a seed of the local date,
  * so everyone sees the same three on the same day and they never reshuffle mid-day.
@@ -30,6 +31,8 @@ export const DAILY_POOL = [
   { id: 'd_furniture', title: 'Home Comforts', text: 'Buy 2 pieces of furniture or décor', event: 'buyFurniture', amount: true, target: 2, reward: { coins: 500, xp: 60 } },
   { id: 'd_chat3', title: 'Social Butterfly', text: 'Have 3 conversations', event: 'chat', target: 3, reward: { coins: 400, xp: 60 } },
   { id: 'd_gift', title: 'Thoughtful', text: 'Give someone a gift', event: 'gift', target: 1, reward: { coins: 400, xp: 50 } },
+  { id: 'd_minigame', title: 'Game On', text: 'Play an arcade minigame', event: 'minigame', target: 1, reward: { coins: 300, xp: 40 } },
+  { id: 'd_photo', title: 'Strike a Pose', text: 'Take a photo in the Photo Studio', event: 'photo', target: 1, reward: { coins: 300, xp: 40 } },
   { id: 'd_restyle', title: 'Mirror Moment', text: 'Change your hair or makeup in the mirror', event: 'restyle', target: 1, reward: { coins: 300, xp: 40 } },
 ];
 
@@ -45,6 +48,8 @@ export const WEEKLY_POOL = [
   { id: 'w_decorate15', title: 'Makeover Week', text: 'Place 15 pieces of furniture', event: 'decorate', target: 15, reward: { coins: 1800, xp: 300, gems: 6 } },
   { id: 'w_dates2', title: 'Date Night', text: 'Go on 2 dates', event: 'date', target: 2, reward: { coins: 2000, xp: 300, gems: 8 } },
   { id: 'w_party', title: 'Host with the Most', text: 'Host a party at home', event: 'party', target: 1, reward: { coins: 1500, xp: 250, gems: 5 } },
+  { id: 'w_minigames5', title: 'Arcade Star', text: 'Play 5 minigames', event: 'minigame', target: 5, reward: { coins: 1500, xp: 250, gems: 5 } },
+  { id: 'w_homecontest', title: 'Interior Star', text: 'Enter a home design contest', event: 'homeContest', target: 1, reward: { coins: 1200, xp: 200, gems: 5 } },
   { id: 'w_looks3', title: 'Stylist at Heart', text: 'Save 3 looks', event: 'outfit', target: 3, reward: { coins: 1000, xp: 200 } },
 ];
 
@@ -85,6 +90,10 @@ export const STORY_QUESTS = [
   { id: 's_party', title: 'Party Planner', text: 'Host your first party', category: 'Social', stat: (s) => s.social?.parties || 0, target: 1, reward: { coins: 1000, gems: 5 } },
   { id: 's_bestfriend', title: 'Bestie', text: 'Become someone\'s best friend', category: 'Social', stat: (s) => (relPts(s).some(([id, r]) => ['mimi', 'zara', 'priya', 'lottie'].includes(id) && r.points >= 260) ? 1 : 0), target: 1, reward: { coins: 2500, gems: 20 } },
   { id: 's_soulmate', title: 'Soulmates', text: 'Reach "Soulmate" with your partner', category: 'Romance', stat: (s) => (s.social?.partner && (s.social.rel[s.social.partner]?.points || 0) >= 500 ? 1 : 0), target: 1, reward: { coins: 5000, gems: 40 } },
+  { id: 's_cover', title: 'Cover Star', text: 'Shoot your first magazine cover', category: 'Fame', stat: (s) => s.stats.covers || 0, target: 1, reward: { coins: 800, gems: 5 } },
+  { id: 's_jewels', title: 'Jewel Master', text: 'Win a game of Jewellery Match-3', category: 'Arcade', stat: (s) => (s.minigames?.best?.match3 >= 1400 ? 1 : 0), target: 1, reward: { coins: 800, xp: 100 } },
+  { id: 's_homewin', title: 'Designer Home', text: 'Win a home design contest', category: 'Home', stat: (s) => s.homeContests?.wins || 0, target: 1, reward: { coins: 2000, gems: 15 } },
+  { id: 's_sell', title: 'Declutter', text: 'Sell something you no longer need', category: 'Fashion', stat: (s) => s.stats.itemsSold || 0, target: 1, reward: { coins: 300, xp: 50 } },
   { id: 's_level10', title: 'It Girl', text: 'Reach level 10', category: 'Fame', stat: (s) => s.player.level, target: 10, reward: { coins: 3000, gems: 25 } },
   { id: 's_wardrobe40', title: 'Collector', text: 'Own 40 wardrobe pieces', category: 'Fashion', stat: (s) => Object.keys(s.inventory.clothing).length, target: 40, reward: { coins: 2000, gems: 15 } },
   { id: 's_career10', title: 'Living Legend', text: 'Reach career level 10 in any career', category: 'Careers', stat: careerMax, target: 10, reward: { coins: 5000, gems: 40 } },

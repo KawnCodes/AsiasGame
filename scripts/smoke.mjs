@@ -135,8 +135,11 @@ try {
   await sleep(800);
   await shot('11-city');
   await page.locator('.loc[data-id="arcade"]').click({ force: true });
-  await sleep(300);
-  check('coming-soon building explains itself', (await page.locator('.toast').last().textContent()).includes('opens in'));
+  await page.waitForSelector('.arc-card');
+  check('every city building opens (arcade included)', (await page.locator('.arc-card').count()) === 3);
+  await page.locator('.screen-arcade .back-btn').last().click();
+  await page.waitForSelector('.city-svg');
+  await sleep(500);
   await page.locator('.district-jump .chip', { hasText: 'Star Boulevard' }).click();
   await sleep(800);
   await shot('12-city-star-boulevard');

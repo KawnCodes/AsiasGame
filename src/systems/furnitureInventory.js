@@ -8,6 +8,7 @@
 import { FURNITURE_BY_ID, SURFACE_BY_ID } from '../data/furniture.js';
 import { canAfford, spend } from './economy.js';
 import { recordEvent } from './questSystem.js';
+import { BALANCE } from '../data/gameBalance.js';
 
 export const MAX_BUY_QTY = 10;
 
@@ -83,3 +84,21 @@ export function storedGroups(state) {
 }
 
 export const furnitureCount = (state) => Object.keys(state.furniture?.items || {}).length;
+
+/** Resale value of a furniture piece: 50 % of its shop price. */
+export const furnitureResale = (item) => ({ coins: Math.floor((item.price.coins || 0) * BALANCE.resaleRate) });
+
+/** Sell a stored piece. Placed pieces must be stored first; free starter/gift pieces can't be sold. */
+export function sellFurniture(state, uid) {
+  const inst = state.furniture?.items?.[uid];
+  if (!inst) return { ok: false, reason: 'unknown-furniture' };
+  const item = FURNITURE_BY_ID[inst.id];
+  if (!item.sellable || item.starter || !item.price.coins) return { ok: false, reason: 'not-sellable' };
+  if (inst.at) return { ok: false, reason: 'placed', message: 'Put it in storage before selling it.' };
+  const value = furnitureResale(item);
+  delete state.furniture.items[uid];
+  state.player.coins += value.coins;
+  state.stats.itemsSold = (state.stats.itemsSold || 0) + 1;
+  recordEvent(state, 'sell', { kind: 'furniture' });
+  return { ok: true, value };
+}

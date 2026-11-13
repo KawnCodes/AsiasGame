@@ -1,11 +1,11 @@
 /** WARDROBE — view owned clothes, filter, try on / equip, favourites and saved looks. */
-import { h } from '../utils/dom.js';
+import { h, fmt } from '../utils/dom.js';
 import { icon } from '../components/icons.js';
 import { renderAvatar, renderItemThumb } from '../components/avatarRenderer.js';
 import { itemCard, rarityPill } from '../components/itemCard.js';
 import { addTwinkles } from '../components/sparkles.js';
 import { CLOTHING_BY_ID, CATEGORIES } from '../data/clothing.js';
-import { toggleEquip, toggleFavourite, saveOutfit, applyOutfit, deleteOutfit, toggleOutfitFavourite, isEquipped, maxOutfits } from '../systems/inventory.js';
+import { toggleEquip, toggleFavourite, saveOutfit, applyOutfit, deleteOutfit, toggleOutfitFavourite, isEquipped, maxOutfits, sellClothing, clothingResale } from '../systems/inventory.js';
 import { emptyEquipped } from '../systems/gameState.js';
 
 let lastFilter = 'all';
@@ -93,7 +93,26 @@ export default {
         h('div', { class: 'btn-row' },
           h('button', { class: `btn btn-small ${wearing ? 'btn-soft' : 'btn-primary'}`, onClick: () => toggle(it.id) }, wearing ? 'Take off' : 'Wear'),
           h('button', { class: 'btn btn-soft btn-small fav-btn', 'aria-pressed': !!fav, 'aria-label': 'Favourite', onClick: () => { ctx.store.transact((d) => toggleFavourite(d, it.id), 'fav'); ctx.sfx.play('tap'); render(); }, html: `${icon('heart')}${fav ? 'Loved' : 'Love'}` })),
+        it.sellable ? h('button', { class: 'btn btn-soft btn-small sell-btn', onClick: () => sell(it) }, `Sell · ${resaleLabel(it)}`) : h('p', { class: 'muted tiny' }, 'Starter piece — keep it forever ♥'),
       );
+    }
+
+    function resaleLabel(it) {
+      const v = clothingResale(it);
+      return v.gems ? `${fmt(v.gems)} 💎` : `${fmt(v.coins)} coins`;
+    }
+
+    async function sell(it) {
+      if (isEquipped(ctx.store.get(), it.id)) { ctx.sfx.play('error'); ctx.toast('Take it off before selling it.', { type: 'info' }); return; }
+      const ok = await ctx.modal.confirm('Sell this piece?', `Sell <b>${it.name}</b> for <b>${resaleLabel(it)}</b>? It will leave your wardrobe (and any saved looks will skip it).`, 'Sell', 'Keep it');
+      if (!ok) return;
+      const r = ctx.store.transact((d) => sellClothing(d, it.id), 'sell');
+      if (r.ok === false) { ctx.sfx.play('error'); ctx.toast(r.message || 'Could not sell that.', { type: 'error' }); return; }
+      await ctx.saveNow();
+      ctx.sfx.play('buy');
+      ctx.toast(`Sold ${it.name} for ${resaleLabel(it)}`, { type: 'success' });
+      selectedId = null;
+      render();
     }
 
     function toggle(id) {

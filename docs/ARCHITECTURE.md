@@ -29,7 +29,8 @@ every purchase (deduct + add item + ledger record) all-or-nothing.
   code; unknown catalogue ids are dropped on load.
 * Idempotent rewards: grants carry a transaction id recorded in `ledger.processed`
   (e.g. `levelup:5`, `daily:2026-11-06`) so double taps / reloads / imports can't duplicate.
-* Export/import JSON backups from Settings.
+* Export/import JSON backups from Settings. Schema v6 adds `minigames`, `photos`,
+  `homeContests` and `homeAwards`.
 
 ## Avatar rendering (`components/avatarRenderer.js`)
 One inline SVG per render, composed from layers in a fixed order (see `docs/ASSETS.md`).
@@ -81,6 +82,16 @@ the character's `vibes` table (`gameBalance.social`). Story scenes are data keye
 shown once. Male characters use `appearance.body = 'masc'`, which switches the renderer to
 the masculine template in `art/mascArt.js` (same frame and anchors). The data model keeps
 characters separate from player-specific relationship state, ready for real friends later.
+
+## Minigames, photos & design awards
+Game rules live in pure modules under `src/minigames/` (`memory.js`, `match3.js`,
+`styling.js`) — no DOM, seeded RNG, fully unit-tested — and the screens in
+`screens/arcade.js` only draw them. `minigameSystem.claimMinigame` pays each play once via
+the ledger (`minigame:<uid>`). Photos are stored as small specs (look snapshot, pose,
+backdrop, frame, cover) and re-rendered by `art/photoArt.js` into one self-contained SVG,
+which `photoToPng` rasterises on a canvas for export. Home contests (`homeContestSystem.js`)
+score rooms on five categories; rival entries are "ghost" states holding one generated
+room, so the room renderer and the judge treat them exactly like the player's.
 
 ## Navigation
 `components/navigation.js` routes between screen modules with slide/fade transitions and

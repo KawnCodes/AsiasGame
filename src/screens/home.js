@@ -91,6 +91,8 @@ export default {
       appendTo(toolbar, 
         h('button', { class: 'btn btn-primary btn-small', onClick: () => ctx.go('decorate', { propertyId, roomId }), html: `${icon('sparkle')}Decorate` }),
         h('button', { class: 'btn btn-soft btn-small', onClick: () => ctx.go('homes'), html: `${icon('home')}My homes (${s.properties.owned.length})` }),
+        h('button', { class: 'btn btn-soft btn-small awards-btn', onClick: () => ctx.go('design') }, '🏆 Awards'),
+        h('button', { class: 'btn btn-soft btn-small photo-btn', onClick: () => ctx.go('photo', { home: { property: propertyId, room: roomId } }) }, '📸 Photo'),
         isCurrent ? h('button', { class: 'btn btn-lilac btn-small', onClick: () => inviteSomeone() }, '💌 Invite') : null,
         isCurrent ? h('button', { class: 'btn btn-gold btn-small', onClick: () => openParty(ctx) }, '🎉 Party') : null,
         isCurrent ? null : h('button', { class: 'btn btn-gold btn-small', onClick: () => { ctx.store.transact((d) => moveIn(d, propertyId), 'move-in'); ctx.sfx.play('reward'); ctx.toast(`Welcome home to the ${prop.name}! 🏡`, { type: 'success' }); } }, 'Move in here'),
